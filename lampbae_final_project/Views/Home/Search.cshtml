@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<h2>Search</h2>
+Search Results Count: @ViewBag.SearchResultsCount <br />
+
+@*@for (int i = 0; i < (int)ViewBag.SearchResultsCount; i++)
+    {
+        if (ViewBag.items[i]["postalCode"] != null)
+        {
+            @ViewBag.items[i]["title"] @ViewBag.items[i]["sellingStatus"][0]["currentPrice"][0]["__value__"] @ViewBag.items[i]["postalCode"];
+            string imageurl = ViewBag.items[i]["galleryURL"].ToString().Replace("[", "").Replace("]", "").Replace("\"", "");
+
+            <img src="@imageurl" />
+            <br />
+        }
+    }
+    Lowest Price: @ViewBag.MinPrice
+    <br />
+    Highest Price: @ViewBag.MaxPrice*@
