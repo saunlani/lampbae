@@ -20,7 +20,7 @@ namespace lampbae_final_project.Models
         public decimal Price { get; set; }
         public string Email { get; set; }
         public string PostalCode { get; set; }
+        public string Image { get; set; }
         public string Rating { get; set; }
-        public byte[] Image { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace lampbae_final_project.Models
         }
     
         public virtual DbSet<EbayListing> EbayListings { get; set; }
-        public virtual DbSet<UserListing> UserListings { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserListing> UserListings { get; set; }
     }
 }

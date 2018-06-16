@@ -20,6 +20,13 @@ namespace lampbae_final_project.Controllers
             return View();
         }
 
+        public ActionResult ListLamps()
+        {
+            ViewBag.Title = "Home Page";
+
+            return View();
+        }
+
         public ActionResult NewLamp()
         {
             ViewBag.Title = "Upload A New Lamp";
@@ -30,15 +37,28 @@ namespace lampbae_final_project.Controllers
         }
 
         [HttpPost]
-        public ActionResult NewLamp(UserListing model,HttpPostedFileBase image1)
+        public ActionResult NewLamp(HttpPostedFileBase file, UserListing model)
         {
             var db = new LampBaeEntities();
-
-            if (image1 != null)
+            var path = "";
+            if (file != null)
             {
-                model.Image = new byte[image1.ContentLength];
-                image1.InputStream.Read(model.Image, 0, image1.ContentLength);
+                if (file.ContentLength > 0)
+                {
+                    //for checking uploaded file is valid or not
+                    if (Path.GetExtension(file.FileName).ToLower() == ".png"
+                        || Path.GetExtension(file.FileName).ToLower() == ".jpg"
+                        || Path.GetExtension(file.FileName).ToLower() == ".jpeg"
+                        || Path.GetExtension(file.FileName).ToLower() == ".gif")
+                    {
+                        path = Path.Combine(Server.MapPath("~/Content/Images"), file.FileName);
+                        file.SaveAs(path);
+                        model.Image = path;
+
+                    }
+                }
             }
+
             db.UserListings.Add(model);
             db.SaveChanges();
 
@@ -56,7 +76,7 @@ namespace lampbae_final_project.Controllers
             LampBaeEntities db = new LampBaeEntities();
             List<EbayListing> LampDBList = new List<EbayListing>();
 
-
+            
             EbayListing e = (from p in db.EbayListings
                           where p.ID == 394
                           select p).Single();
@@ -64,6 +84,35 @@ namespace lampbae_final_project.Controllers
             string url = e.GalleryURL;
 
             ViewBag.urlforone = url;
+
+            //List<EbayListing> IDAndNames = Lam.Select(p => new ProductShort { ProductID = p.ProductID, ProductName = p.ProductName }).ToList();
+            //LampDBList() 
+
+            //ViewBag.URL = LampBaeEntities
+            ViewBag.Title = "Lamps";
+
+            return View();
+        }
+        public ActionResult GetImage(byte[] data)
+        {
+            MemoryStream ms = new MemoryStream(data);
+            return File(ms.ToArray(), "image/png");
+        }
+
+
+        [Authorize]
+        public ActionResult UserLampsOnly()
+        {
+
+            LampBaeEntities db = new LampBaeEntities();
+            List<UserListing> LampDBList = new List<UserListing>();
+
+
+            UserListing e = (from p in db.UserListings
+                             where p.UserLampID == 1
+                             select p).Single();
+
+
 
             //List<EbayListing> IDAndNames = Lam.Select(p => new ProductShort { ProductID = p.ProductID, ProductName = p.ProductName }).ToList();
             //LampDBList() 

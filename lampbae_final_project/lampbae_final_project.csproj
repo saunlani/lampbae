@@ -324,7 +324,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Lamps.cshtml" />
     <Content Include="Views\Home\NewLamp.cshtml" />
-    <Content Include="Views\Home\ViewSubmittedLamp.cshtml" />
+    <Content Include="Views\Home\UserLampsOnly.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

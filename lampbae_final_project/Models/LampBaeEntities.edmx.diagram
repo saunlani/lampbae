@@ -6,8 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="71cf61dbff16472f88ad09ebc93e8288" Name="Diagram1">
         <EntityTypeShape EntityType="LampBaeModel.EbayListing" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LampBaeModel.UserListing" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LampBaeModel.User" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LampBaeModel.UserListing" Width="1.5" PointX="3.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
