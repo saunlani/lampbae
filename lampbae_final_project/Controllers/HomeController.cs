@@ -20,6 +20,35 @@ namespace lampbae_final_project.Controllers
             return View();
         }
 
+        public ActionResult NewLamp()
+        {
+            ViewBag.Title = "Upload A New Lamp";
+
+            UserListing u1 = new UserListing();
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult NewLamp(UserListing model,HttpPostedFileBase image1)
+        {
+            var db = new LampBaeEntities();
+
+            if (image1 != null)
+            {
+                model.Image = new byte[image1.ContentLength];
+                image1.InputStream.Read(model.Image, 0, image1.ContentLength);
+            }
+            db.UserListings.Add(model);
+            db.SaveChanges();
+
+            ViewBag.Title = "Upload A New Lamp";
+
+            UserListing u1 = new UserListing();
+
+            return RedirectToAction("Index", "Home");
+        }
+
         [Authorize]
         public ActionResult Lamps()
         {
