@@ -166,7 +166,67 @@ namespace lampbae_final_project.Controllers
                 db.SaveChanges();
 
             }
+            ViewData["CurrentLampID"] = listing.ID;
             return View();
+        }
+
+        //handles user and global rating.
+        [Authorize]
+        public ActionResult Rating(int lampid, int ratingvalue)
+        {
+            
+            LampBaeEntities1 db = new LampBaeEntities1();
+
+            //instantiate new list for lamp id's
+            List<Listing> LampDBList = new List<Listing>();
+
+            //grab listing based on lampid provided
+            Listing listing = (from p in db.Listings
+                          where p.ID == lampid
+                          select p).Single();
+
+
+            //global rating
+            listing.Rating = listing.Rating + ratingvalue;
+
+            //user rating
+            //instantiate new list for ratings
+            List<Rating> RatingList = (from p in db.Ratings
+                                       where p.RatingID != 0
+                                       select p).ToList();
+
+            Rating ratingrecord = new Rating();
+            ratingrecord = null;
+
+            // try to find a lamp with the lamp id/user id combo
+            try
+            {
+                ratingrecord = (from m in db.Ratings
+                                  where m.ItemID == lampid
+                                  && m.UserID == User.Identity.Name
+                                  select m).Single();
+            }
+            catch (Exception e)
+            { }
+            
+            // if the record does not exist, then assign values, instantiate object and add the record.
+            if (ratingrecord == null)
+            {
+                ratingrecord.ItemID = lampid;
+                ratingrecord.UserID = User.Identity.Name;
+                ratingrecord.Rating1 = ratingvalue;
+                new Rating { ItemID = lampid, UserID = User.Identity.Name, Rating1 = ratingvalue };
+                db.Ratings.Add(ratingrecord);
+                db.SaveChanges();
+            }
+
+            // else, if a record exists, then increment or decrement the rating
+            else
+            {
+                ratingrecord.Rating1 = ratingrecord.Rating1 + ratingvalue;
+            }
+
+            return RedirectToAction("Lamp");
         }
 
         [Authorize]
