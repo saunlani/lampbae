@@ -5,9 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="784d29a682514afd800ff27a9c93465b" Name="Diagram1">
-        <EntityTypeShape EntityType="LampBaeModel.Listing" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LampBaeModel.Rating" Width="1.5" PointX="3" PointY="1.375" />
-        <AssociationConnector Association="LampBaeModel.FK_Ratings_Listings" />
+        <EntityTypeShape EntityType="LampBaeModel.Listing" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LampBaeModel.Rating" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LampBaeModel.ViewCount" Width="1.5" PointX="3.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

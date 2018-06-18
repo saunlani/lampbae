@@ -20,13 +20,7 @@ namespace lampbae_final_project.Controllers
             return View();
         }
 
-        public ActionResult ListLamps()
-        {
-            ViewBag.Title = "Home Page";
-
-            return View();
-        }
-
+        [Authorize]
         public ActionResult NewLamp()
         {
             ViewBag.Title = "Upload A New Lamp";
@@ -36,6 +30,7 @@ namespace lampbae_final_project.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult NewLamp(HttpPostedFileBase file, Listing model)
         {
@@ -77,6 +72,9 @@ namespace lampbae_final_project.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        // ************ Just testing out the ratings table *********** //
+        // icnrement the rating if a valid lampid is deliberately typed.
+        [Authorize]
         public ActionResult Lamps(int? lampid)
         {
             ViewBag.Title = "Lamps";
@@ -84,7 +82,7 @@ namespace lampbae_final_project.Controllers
             //instantiate DB from model
             LampBaeEntities1 db = new LampBaeEntities1();
 
-            //instantiate new list
+            //instantiate new list for lamp id's
             List<Listing> LampDBList = new List<Listing>();
 
             //populate list from model/db
@@ -92,23 +90,33 @@ namespace lampbae_final_project.Controllers
                           where p.ID != 0
                           select p).ToList();
 
-            int x;
-            // if no lampid is provided, a random id will be generated and displayed to the view
-            if (lampid == null)
+            //instantiate new list for ratings
+            List<ViewCount> ViewCountList = (from p in db.ViewCounts
+                                          where p.ViewID != 0
+                                          select p).ToList();
+
+            //declaring our listing object
+            Listing listing = null;
+
+            // if no lampid is provided, a random id will be generated and assigned to x
+            if (lampid == null || lampid > LampDBList.Count || lampid < LampDBList.Count)
             {
                 //instantiate new random object & create a new random int based on range of list count as max value
                 Random r = new Random();
-                x = r.Next(1, LampDBList.Count());
-            }
-            else
-            {
-                x = (int)lampid;
+                lampid = r.Next(1, LampDBList.Count());
+                listing = (from p in db.Listings
+                           where p.ID == lampid
+                           select p).Single();
             }
 
-            //grabs a listing from list
-            Listing listing = (from p in db.Listings
-                               where p.ID == x
-                               select p).Single();
+            else
+            {
+
+                //grabs a listing from list
+                listing = (from p in db.Listings
+                           where p.ID == lampid
+                           select p).Single();
+            }
 
             //handling for ebay listings vs user listings (the image url structure is different)
             if (listing.EbayItemNumber == null)
@@ -119,10 +127,49 @@ namespace lampbae_final_project.Controllers
             {
                 ViewData["ImageURL"] = listing.Image;
             }
-            
+
+            //test if view record exists already
+            ViewCount existingViewCount = null;
+            try
+            {
+                existingViewCount = (from m in db.ViewCounts
+                                  where m.ItemID == lampid
+                                  && m.UserID == User.Identity.Name
+                                  select m).Single();
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred: '{0}'", e);
+            }
+
+
+
+            // if a view record already exists, simply increment
+            if (existingViewCount != null)
+            {
+                existingViewCount.ViewCount1 = existingViewCount.ViewCount1 + 1;
+                db.SaveChanges();
+            }
+
+            //if a view record doesn't already exist, create a new record and assign it a value of one
+            else
+            {
+                ViewCount newviewcount = new ViewCount();
+                newviewcount.UserID = User.Identity.Name;
+                newviewcount.ItemID = (int)lampid;
+                newviewcount.ViewCount1 = 1;
+                newviewcount.ViewDate = DateTime.Now;
+                new ViewCount() { UserID = newviewcount.UserID, ItemID = (int)lampid, ViewCount1 = 1, ViewDate = DateTime.Now};
+                db.ViewCounts.Add(newviewcount);
+                db.SaveChanges();
+
+            }
             return View();
         }
-
+    
+        [Authorize]
         public ActionResult Search()
         {
             ViewBag.Title = "Home Page";

@@ -27,5 +27,6 @@ namespace lampbae_final_project.Models
     
         public virtual DbSet<Listing> Listings { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
+        public virtual DbSet<ViewCount> ViewCounts { get; set; }
     }
 }

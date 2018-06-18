@@ -19,52 +19,45 @@
           <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="Rating" Type="nvarchar(max)" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'LampBae.dbo.Ratings' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Ratings">
           <Key>
-            <PropertyRef Name="Rating" />
+            <PropertyRef Name="RatingID" />
           </Key>
           <Property Name="UserID" Type="nvarchar" MaxLength="128" />
           <Property Name="ItemID" Type="int" />
-          <Property Name="Rating" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="RatingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Ratings_Listings">
-          <End Role="Listings" Type="Self.Listings" Multiplicity="0..1" />
-          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Listings">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Ratings">
-              <PropertyRef Name="ItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="ViewCounts">
+          <Key>
+            <PropertyRef Name="ViewID" />
+          </Key>
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="ViewCount" Type="int" />
+          <Property Name="ViewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ViewDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="LampBaeModelStoreContainer">
           <EntitySet Name="Listings" EntityType="Self.Listings" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Ratings" EntityType="Self.Ratings" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Ratings].[UserID] AS [UserID], 
-    [Ratings].[ItemID] AS [ItemID], 
-    [Ratings].[Rating] AS [Rating]
-    FROM [dbo].[Ratings] AS [Ratings]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK_Ratings_Listings" Association="Self.FK_Ratings_Listings">
-            <End Role="Listings" EntitySet="Listings" />
-            <End Role="Ratings" EntitySet="Ratings" />
-          </AssociationSet>
+          <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewCounts" EntityType="Self.ViewCounts" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LampBaeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LampBaeEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Listings" EntityType="LampBaeModel.Listing" />
+          <EntitySet Name="Ratings" EntityType="LampBaeModel.Rating" />
+          <EntitySet Name="ViewCounts" EntityType="LampBaeModel.ViewCount" />
+        </EntityContainer>
         <EntityType Name="Listing">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EbayItemNumber" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="EbayItemNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="PostalCode" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
@@ -72,37 +65,26 @@ warning 6002: The table/view 'LampBae.dbo.Ratings' does not have a primary key d
           <Property Name="Email" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Rating" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ratings" Relationship="LampBaeModel.FK_Ratings_Listings" FromRole="Listing" ToRole="Rating" />
         </EntityType>
-        <EntityContainer Name="LampBaeEntities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Listings" EntityType="Self.Listing" />
-          <EntitySet Name="Ratings" EntityType="LampBaeModel.Rating" />
-          <AssociationSet Name="FK_Ratings_Listings" Association="LampBaeModel.FK_Ratings_Listings">
-            <End Role="Listing" EntitySet="Listings" />
-            <End Role="Rating" EntitySet="Ratings" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="Rating">
           <Key>
-            <PropertyRef Name="Rating1" />
+            <PropertyRef Name="RatingID" />
           </Key>
           <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ItemID" Type="Int32" />
-          <Property Name="Rating1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Listing" Relationship="LampBaeModel.FK_Ratings_Listings" FromRole="Rating" ToRole="Listing" />
+          <Property Name="Rating1" Type="Int32" />
+          <Property Name="RatingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
-        <Association Name="FK_Ratings_Listings">
-          <End Type="LampBaeModel.Listing" Role="Listing" Multiplicity="0..1" />
-          <End Type="LampBaeModel.Rating" Role="Rating" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Listing">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Rating">
-              <PropertyRef Name="ItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="ViewCount">
+          <Key>
+            <PropertyRef Name="ViewID" />
+          </Key>
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="ViewCount1" Type="Int32" />
+          <Property Name="ViewID" Type="Int32" Nullable="false" />
+          <Property Name="ViewDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -112,22 +94,34 @@ warning 6002: The table/view 'LampBae.dbo.Ratings' does not have a primary key d
           <EntitySetMapping Name="Listings">
             <EntityTypeMapping TypeName="LampBaeModel.Listing">
               <MappingFragment StoreEntitySet="Listings">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="EbayItemNumber" ColumnName="EbayItemNumber" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="EbayItemNumber" ColumnName="EbayItemNumber" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ratings">
             <EntityTypeMapping TypeName="LampBaeModel.Rating">
               <MappingFragment StoreEntitySet="Ratings">
+                <ScalarProperty Name="RatingID" ColumnName="RatingID" />
                 <ScalarProperty Name="Rating1" ColumnName="Rating" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewCounts">
+            <EntityTypeMapping TypeName="LampBaeModel.ViewCount">
+              <MappingFragment StoreEntitySet="ViewCounts">
+                <ScalarProperty Name="ViewDate" ColumnName="ViewDate" />
+                <ScalarProperty Name="ViewID" ColumnName="ViewID" />
+                <ScalarProperty Name="ViewCount1" ColumnName="ViewCount" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>

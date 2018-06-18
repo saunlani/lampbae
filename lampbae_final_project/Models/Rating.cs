@@ -16,8 +16,7 @@ namespace lampbae_final_project.Models
     {
         public string UserID { get; set; }
         public Nullable<int> ItemID { get; set; }
-        public string Rating1 { get; set; }
-    
-        public virtual Listing Listing { get; set; }
+        public Nullable<int> Rating1 { get; set; }
+        public int RatingID { get; set; }
     }
 }

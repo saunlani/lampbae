@@ -12,16 +12,12 @@ namespace lampbae_final_project.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Listing
+    public partial class ViewCount
     {
-        public int ID { get; set; }
-        public string EbayItemNumber { get; set; }
-        public string Title { get; set; }
-        public string PostalCode { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public string Email { get; set; }
-        public string Image { get; set; }
-        public string Rating { get; set; }
+        public string UserID { get; set; }
+        public int ItemID { get; set; }
+        public Nullable<int> ViewCount1 { get; set; }
+        public int ViewID { get; set; }
+        public System.DateTime ViewDate { get; set; }
     }
 }
