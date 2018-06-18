@@ -168,7 +168,7 @@ namespace lampbae_final_project.Controllers
             }
             return View();
         }
-    
+
         [Authorize]
         public ActionResult Search()
         {

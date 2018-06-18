@@ -23,5 +23,6 @@ namespace lampbae_final_project.Models
         public string Email { get; set; }
         public string Image { get; set; }
         public string Rating { get; set; }
+        public Nullable<int> ReportCount { get; set; }
     }
 }
