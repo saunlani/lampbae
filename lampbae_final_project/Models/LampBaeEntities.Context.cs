@@ -13,10 +13,10 @@ namespace lampbae_final_project.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class LampBaeEntities : DbContext
+    public partial class LampBaeEntities1 : DbContext
     {
-        public LampBaeEntities()
-            : base("name=LampBaeEntities")
+        public LampBaeEntities1()
+            : base("name=LampBaeEntities1")
         {
         }
     
@@ -25,8 +25,7 @@ namespace lampbae_final_project.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<EbayListing> EbayListings { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserListing> UserListings { get; set; }
+        public virtual DbSet<Listing> Listings { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
     }
 }

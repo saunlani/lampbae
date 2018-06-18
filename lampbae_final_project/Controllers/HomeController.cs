@@ -31,17 +31,17 @@ namespace lampbae_final_project.Controllers
         {
             ViewBag.Title = "Upload A New Lamp";
 
-            UserListing u1 = new UserListing();
+            Listing u1 = new Listing();
 
             return View();
         }
 
         [HttpPost]
-        public ActionResult NewLamp(HttpPostedFileBase file, UserListing model)
+        public ActionResult NewLamp(HttpPostedFileBase file, Listing model)
         {
             ViewBag.Title = "Upload A New Lamp";
 
-            var db = new LampBaeEntities();
+            var db = new LampBaeEntities1();
             var path = "";
             if (file != null)
             {
@@ -69,60 +69,60 @@ namespace lampbae_final_project.Controllers
                 }
             }
 
-            db.UserListings.Add(model);
+            db.Listings.Add(model);
             db.SaveChanges();
 
-            UserListing u1 = new UserListing();
+            Listing u1 = new Listing();
 
             return RedirectToAction("Index", "Home");
         }
 
-        [Authorize]
-        public ActionResult Lamps()
+        public ActionResult Lamps(int? lampid)
         {
+            ViewBag.Title = "Lamps";
 
-            LampBaeEntities db = new LampBaeEntities();
-            List<EbayListing> LampDBList = new List<EbayListing>();
+            //instantiate DB from model
+            LampBaeEntities1 db = new LampBaeEntities1();
 
+            //instantiate new list
+            List<Listing> LampDBList = new List<Listing>();
+
+            //populate list from model/db
+            LampDBList = (from p in db.Listings
+                          where p.ID != 0
+                          select p).ToList();
+
+            int x;
+            // if no lampid is provided, a random id will be generated and displayed to the view
+            if (lampid == null)
+            {
+                //instantiate new random object & create a new random int based on range of list count as max value
+                Random r = new Random();
+                x = r.Next(1, LampDBList.Count());
+            }
+            else
+            {
+                x = (int)lampid;
+            }
+
+            //grabs a listing from list
+            Listing listing = (from p in db.Listings
+                               where p.ID == x
+                               select p).Single();
+
+            //handling for ebay listings vs user listings (the image url structure is different)
+            if (listing.EbayItemNumber == null)
+            {
+                ViewData["ImageURL"] = Url.Content("~/Content/" + listing.Image);
+            }
+            else
+            {
+                ViewData["ImageURL"] = listing.Image;
+            }
             
-            EbayListing e = (from p in db.EbayListings
-                          where p.ID == 395
-                          select p).Single();
-
-            string url = e.GalleryURL;
-
-            ViewBag.urlforone = url;
-
-            //List<EbayListing> IDAndNames = Lam.Select(p => new ProductShort { ProductID = p.ProductID, ProductName = p.ProductName }).ToList();
-            //LampDBList() 
-
-            ViewBag.Title = "Lamps";
-
             return View();
         }
 
-
-        [Authorize]
-        public ActionResult UserLampsOnly()
-        {
-
-            LampBaeEntities db = new LampBaeEntities();
-            List<UserListing> LampDBList = new List<UserListing>();
-
-
-            UserListing e = (from p in db.UserListings
-                             where p.UserLampID == 10
-                             select p).Single();
-
-            ViewBag.urlforone = (string)e.Image;
-
-            //ViewBag.URL = LampBaeEntities
-            ViewBag.Title = "Lamps";
-
-            return View();
-        }
-
-        [Authorize]
         public ActionResult Search()
         {
             ViewBag.Title = "Home Page";
@@ -161,33 +161,33 @@ namespace lampbae_final_project.Controllers
 
 
                 //instantiate new ebaylisting object
-                EbayListing eItem = new EbayListing();
+                Listing listing = new Listing();
 
                 //instantiate new lamp entities database
-                LampBaeEntities db = new LampBaeEntities();
+                LampBaeEntities1 db = new LampBaeEntities1();
 
-                List<EbayListing> LampDBList = new List<EbayListing>();
+                List<Listing> LampDBList = new List<Listing>();
 
-                LampDBList = (from p in db.EbayListings
-                              where p.ItemID != ""
+                LampDBList = (from p in db.Listings
+                              where p.ID != 0
                               select p).ToList();
 
                 for (int i = 0; i < items.Count; i++)
                 {
-                    if (LampDBList.Exists(x => x.ItemID == (string)items[i]["itemId"][0]))
+                    if (LampDBList.Exists(x => x.EbayItemNumber.ToString() == (string)items[i]["itemId"][0]))
                     {
                         //dupes detected
                     }
                     else
                     {
-                        eItem.Title = (string)items[i]["title"][0];
-                        eItem.GalleryURL = (string)items[i]["galleryURL"][0];
-                        eItem.PostalCode = (string)items[i]["postalCode"][0];
-                        eItem.ItemID = (string)items[i]["itemId"][0];
-                        eItem.EndDate = (DateTime)items[i]["listingInfo"][0]["endTime"][0];
-                        eItem.Price = (decimal)items[i]["sellingStatus"][0]["currentPrice"][0]["__value__"];
-                        new EbayListing() { ItemID = eItem.ItemID, Title = eItem.Title, PostalCode = eItem.PostalCode, GalleryURL = eItem.GalleryURL };
-                        db.EbayListings.Add(eItem);
+                        listing.Title = (string)items[i]["title"][0];
+                        listing.Image = (string)items[i]["galleryURL"][0];
+                        listing.PostalCode = (string)items[i]["postalCode"][0];
+                        listing.EbayItemNumber = (string)items[i]["itemId"][0];
+                        listing.EndDate = (DateTime)items[i]["listingInfo"][0]["endTime"][0];
+                        listing.Price = (decimal)items[i]["sellingStatus"][0]["currentPrice"][0]["__value__"];
+                        new Listing() { EbayItemNumber = listing.EbayItemNumber, Title = listing.Title, PostalCode = listing.PostalCode, Image = listing.Image };
+                        db.Listings.Add(listing);
                         db.SaveChanges();
                     }
                 }

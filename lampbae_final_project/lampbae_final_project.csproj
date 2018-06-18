@@ -217,9 +217,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\EbayListing.cs">
-      <DependentUpon>LampBaeEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LampBaeEntities.Context.cs">
       <AutoGen>True</AutoGen>
@@ -236,13 +233,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LampBaeEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Listing.cs">
+      <DependentUpon>LampBaeEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\User.cs">
-      <DependentUpon>LampBaeEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserListing.cs">
-      <DependentUpon>LampBaeEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -324,7 +318,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Lamps.cshtml" />
     <Content Include="Views\Home\NewLamp.cshtml" />
-    <Content Include="Views\Home\UserLampsOnly.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
