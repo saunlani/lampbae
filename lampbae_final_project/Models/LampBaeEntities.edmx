@@ -17,8 +17,9 @@
           <Property Name="Price" Type="decimal" Precision="14" Scale="2" />
           <Property Name="Email" Type="nvarchar" MaxLength="120" />
           <Property Name="Image" Type="nvarchar(max)" />
-          <Property Name="Rating" Type="nvarchar(max)" />
+          <Property Name="Rating" Type="int" />
           <Property Name="ReportCount" Type="int" />
+          <Property Name="ItemSearchURL" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Ratings">
           <Key>
@@ -28,6 +29,16 @@
           <Property Name="ItemID" Type="int" />
           <Property Name="Rating" Type="int" />
           <Property Name="RatingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reports">
+          <Key>
+            <PropertyRef Name="ReportID" />
+          </Key>
+          <Property Name="ReportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LampID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Info" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" />
         </EntityType>
         <EntityType Name="ViewCounts">
           <Key>
@@ -42,6 +53,7 @@
         <EntityContainer Name="LampBaeModelStoreContainer">
           <EntitySet Name="Listings" EntityType="Self.Listings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ViewCounts" EntityType="Self.ViewCounts" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -52,6 +64,7 @@
           <EntitySet Name="Listings" EntityType="LampBaeModel.Listing" />
           <EntitySet Name="Ratings" EntityType="LampBaeModel.Rating" />
           <EntitySet Name="ViewCounts" EntityType="LampBaeModel.ViewCount" />
+          <EntitySet Name="Reports" EntityType="LampBaeModel.Report" />
         </EntityContainer>
         <EntityType Name="Listing">
           <Key>
@@ -65,8 +78,9 @@
           <Property Name="Price" Type="Decimal" Precision="14" Scale="2" />
           <Property Name="Email" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Rating" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="Int32" />
           <Property Name="ReportCount" Type="Int32" />
+          <Property Name="ItemSearchURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Rating">
           <Key>
@@ -87,6 +101,16 @@
           <Property Name="ViewID" Type="Int32" Nullable="false" />
           <Property Name="ViewDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="ReportID" />
+          </Key>
+          <Property Name="ReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LampID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Info" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -96,6 +120,7 @@
           <EntitySetMapping Name="Listings">
             <EntityTypeMapping TypeName="LampBaeModel.Listing">
               <MappingFragment StoreEntitySet="Listings">
+                <ScalarProperty Name="ItemSearchURL" ColumnName="ItemSearchURL" />
                 <ScalarProperty Name="ReportCount" ColumnName="ReportCount" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
@@ -127,6 +152,17 @@
                 <ScalarProperty Name="ViewCount1" ColumnName="ViewCount" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reports">
+            <EntityTypeMapping TypeName="LampBaeModel.Report">
+              <MappingFragment StoreEntitySet="Reports">
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="LampID" ColumnName="LampID" />
+                <ScalarProperty Name="ReportID" ColumnName="ReportID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

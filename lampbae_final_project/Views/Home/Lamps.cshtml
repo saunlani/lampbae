@@ -18,6 +18,12 @@
 <div style="margin: 0 auto; width: 656px; text-align: center;">
     <button type="button">Hot</button>
     <button type="button">Cold</button>
+
+    <form action="/Home/Flag">
+        <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
+        <input type="submit" value="Flag" />
+    </form>
+    
     <br />
     <br />
     <br />

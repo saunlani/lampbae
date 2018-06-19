@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Flag";
+}
+
+<h4>Reason for Flag:</h4>
+
+<form action="/Home/SubmitFlag" onsubmit="alert('Lamp Info Submitted!')">
+    <textarea name="info" cols="40" rows="5"></textarea><br />
+    <input name="lampid" type="hidden" value="@ViewBag.DaLamp" />
+
+    <input type="submit" value="Submit" />
+</form>
+    
+  

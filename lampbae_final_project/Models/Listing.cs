@@ -22,7 +22,8 @@ namespace lampbae_final_project.Models
         public Nullable<decimal> Price { get; set; }
         public string Email { get; set; }
         public string Image { get; set; }
-        public string Rating { get; set; }
+        public Nullable<int> Rating { get; set; }
         public Nullable<int> ReportCount { get; set; }
+        public string ItemSearchURL { get; set; }
     }
 }

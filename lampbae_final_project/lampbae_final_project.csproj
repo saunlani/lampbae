@@ -240,6 +240,9 @@
     <Compile Include="Models\Rating.cs">
       <DependentUpon>LampBaeEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Report.cs">
+      <DependentUpon>LampBaeEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ViewCount.cs">
       <DependentUpon>LampBaeEntities.tt</DependentUpon>
     </Compile>
@@ -323,6 +326,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Lamps.cshtml" />
     <Content Include="Views\Home\NewLamp.cshtml" />
+    <Content Include="Views\Home\Flag.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

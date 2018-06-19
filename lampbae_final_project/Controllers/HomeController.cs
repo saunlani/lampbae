@@ -166,6 +166,42 @@ namespace lampbae_final_project.Controllers
             return View();
         }
 
+        public ActionResult SubmitFlag(int lampId, string info)
+        {
+            //instantiate new lamp entities database
+            LampBaeEntities1 db = new LampBaeEntities1();
+
+            //instantiating new list and populating it with report where the ID != 0
+            List<Report> ReportList = (from r in db.Reports
+                                       where r.ReportID != 0
+                                       select r).ToList();
+
+            //instantiate new report object
+            Report report = new Report();
+
+            report.LampID = lampId;
+            report.Info = info;
+            report.UserID = User.Identity.Name;
+            report.DateAdded = DateTime.Now;
+
+            //instantiate and populate from listing
+            Listing newListing = (from r in db.Listings
+                                  where r.ID == lampId
+                                  select r).Single();
+
+            newListing.ReportCount++;
+
+            db.Reports.Add(report);
+            db.SaveChanges();
+            return RedirectToAction("Lamps");
+        }
+
+        public ActionResult Flag(int lampid)
+        {
+            ViewBag.DaLamp = lampid;
+            return View();
+        }
+
         //handles user and global rating.
         [Authorize]
         public ActionResult Rating(int lampid, int ratingvalue)
