@@ -67,13 +67,9 @@ namespace lampbae_final_project.Controllers
             db.Listings.Add(model);
             db.SaveChanges();
 
-            Listing u1 = new Listing();
-
             return RedirectToAction("Index", "Home");
         }
 
-        // ************ Just testing out the ratings table *********** //
-        // icnrement the rating if a valid lampid is deliberately typed.
         [Authorize]
         public ActionResult Lamps(int? lampid)
         {
@@ -174,6 +170,7 @@ namespace lampbae_final_project.Controllers
         [Authorize]
         public ActionResult Rating(int lampid, int ratingvalue)
         {
+
             
             LampBaeEntities1 db = new LampBaeEntities1();
 
