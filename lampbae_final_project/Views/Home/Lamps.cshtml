@@ -1,22 +1,19 @@
 ﻿@using lampbae_final_project.Models;
-
 @{
-    ViewBag.Title = "Lamp Display";
-}
+                /**/
 
+                ViewBag.Title = "Lamp Display";
+}
 <h2>LampBae</h2>
 <a href="/Home/Lamps">
-
     <input style="float:right" type="button" value="Love It!" />
 </a>
-
 <div style="margin: 0 auto; width: 656px; text-align: center;">
     <a href="@ViewData["viewItemURL"]" target="_blank"> <img src="@ViewData["ImageURL"]" type="image" alt="Lamp Bae" /> </a>
 </div>
 <a href="/Home/Lamps">
     <input style="float:right" type="button" value="Leave It!" />
 </a>
-
 
 <br />
 <br />
@@ -30,28 +27,28 @@
             <input type="submit" value="Hot" />
         </form>
     </div>
-    </div>
-    <div>
-        <form action="/Home/Rating">
-            <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
-            <input name="ratingvalue" type="hidden" value=-1 />
-            <input type="submit" value="Cold" />
-        </form>
-        <form action="/Home/Flag">
-            <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
-            <input type="submit" value="Flag" />
-        </form>
-    </div>
-    <br />
-    <br />
-    <br />
-    <div>
-        <a href="/Home/NewLamp">
-            <input style="float:inherit" type="button" value="Upload" />
-        </a>
-    </div>
-
-    @ViewData["CurrentLampID"]
-    <a href="Controller/ActionMethod">
-        <input type="button" value="Click Me" />
+</div>
+<div>
+    <form action="/Home/Rating">
+        <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
+        <input name="ratingvalue" type="hidden" value=-1 />
+        <input type="submit" value="Cold" />
+    </form>
+    <form action="/Home/Flag">
+        <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
+        <input type="submit" value="Flag" />
+    </form>
+</div>
+<br />
+<br />
+<br />
+<div>
+    <a href="/Home/NewLamp">
+        <input style="float:inherit" type="button" value="Upload" />
     </a>
+</div>
+Current Lamp ID: @ViewData["CurrentLampID"]<br />
+This lamp is @ViewBag.Distance miles away from you!<br />
+Your username: @ViewBag.CurrentUser<br />
+Your IP: @ViewBag.CurrentUserIP<br />
+Your zipcode: @ViewBag.UserZip<br />

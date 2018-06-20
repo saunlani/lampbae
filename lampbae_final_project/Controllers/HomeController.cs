@@ -75,6 +75,24 @@ namespace lampbae_final_project.Controllers
         {
             ViewBag.Title = "Lamps";
 
+            // gets IP address of user
+            string userIP = new WebClient().DownloadString("http://icanhazip.com");
+            ViewBag.CurrentUserIP = userIP;
+
+            //deterine the zip code based on the IP address
+            HttpWebRequest ipstackrequest =
+                WebRequest.CreateHttp($"http://api.ipstack.com/{userIP}?access_key=d73350465665ed422161f5a8724f5bd2");
+            ipstackrequest.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+            HttpWebResponse IPStackResponse;
+            IPStackResponse = (HttpWebResponse)ipstackrequest.GetResponse();
+
+            StreamReader IPReader = new StreamReader(IPStackResponse.GetResponseStream());
+            string IPData = IPReader.ReadToEnd();
+
+            JObject IPJsonData = JObject.Parse(IPData);
+            string UserZipCode = (string)IPJsonData["zip"];
+            ViewBag.UserZip = IPJsonData["zip"];
+
             //instantiate DB from model
             LampBaeEntities1 db = new LampBaeEntities1();
 
@@ -165,9 +183,48 @@ namespace lampbae_final_project.Controllers
                 db.SaveChanges();
 
             }
+
             ViewData["CurrentLampID"] = listing.ID;
+            string ItemZipCode = listing.PostalCode;
+            HttpWebRequest request =
+                WebRequest.CreateHttp($"https://redline-redline-zipcode.p.mashape.com/rest/distance.json/{UserZipCode}/{ItemZipCode}/mile");
+            request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+
+            // Adding keys to the header 
+            request.Headers.Add("X-Mashape-Key", "bsytHiIt3FmshiXhyAlMdv4D7Vsxp1OeNuxjsnNL5l6EVqH1u9");
+
+            ViewBag.Title = "Get distance";
+
+            HttpWebResponse Response;
+            try
+            {
+                Response = (HttpWebResponse)request.GetResponse();
+            }
+            catch (WebException e)
+            {
+                ViewBag.Error = "Exception";
+                ViewBag.ErrorDescription = e.Message;
+                return View();
+            }
+
+            if (Response.StatusCode != HttpStatusCode.OK)
+            {
+                ViewBag.Error = Response.StatusCode;
+                ViewBag.ErrorDescription = Response.StatusDescription;
+                return View();
+            }
+
+            StreamReader reader = new StreamReader(Response.GetResponseStream());
+            string distanceData = reader.ReadToEnd();
+
+            JObject JsonData = JObject.Parse(distanceData);
+            ViewBag.Distance = JsonData["distance"];
+            ViewBag.UserZip = UserZipCode;
+            ViewBag.CurrentUser = User.Identity.Name;
+
             return View();
         }
+
         public ActionResult HotLamps()
         {
             LampBaeEntities1 db = new LampBaeEntities1();
