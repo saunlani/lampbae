@@ -12,7 +12,7 @@ namespace lampbae_final_project.Controllers
 {
     public class HomeController : Controller
     {
-
+       
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
@@ -163,6 +163,44 @@ namespace lampbae_final_project.Controllers
 
             }
             ViewData["CurrentLampID"] = listing.ID;
+            return View();
+        }
+        public ActionResult HotLamps()
+        {
+            LampBaeEntities1 db = new LampBaeEntities1();
+
+            List<Listing> RatedLampList = new List<Listing>();
+            RatedLampList = (from p in db.Listings
+                             where p.Rating >= 1
+                             select p).ToList();
+
+            ViewBag.Listings = RatedLampList;
+
+
+            if (RatedLampList.Count > 5)
+            {
+                ViewBag.Count = 5;
+            }
+            else
+            {
+                ViewBag.Count = RatedLampList.Count;
+            }
+
+            List<Rating> UserLikes = (from p in db.Ratings
+                                      where p.Rating1 >= 1
+                                      && p.UserID == User.Identity.Name
+                                      select p).ToList();
+            ViewBag.Rating = UserLikes;
+            if (UserLikes.Count > 5)
+            {
+                ViewBag.Count1 = 5;
+            }
+            else
+            {
+                ViewBag.Count1 = UserLikes.Count;
+            }
+
+
             return View();
         }
 

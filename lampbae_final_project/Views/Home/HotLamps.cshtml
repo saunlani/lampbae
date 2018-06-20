@@ -1,0 +1,25 @@
+﻿@model lampbae_final_project.Models.Listing
+@using lampbae_final_project.Models;
+@using System.Data;
+
+@{
+    ViewBag.Title = "HotLamps";
+}
+
+<h2>HotLamps</h2>
+
+@ViewData["RatedLampList"]
+
+<h3>Popular Lamps</h3>
+<div>
+    <table>
+
+        @for (int i = 0; i < ViewBag.Count; i++)
+        {
+            <a href="@ViewBag.Listings[i].ItemSearchURL"> <img src="@ViewBag.Listings[i].Image" type="image" alt="Lamp Bae" /></a>
+        }
+    </table>
+
+    <input type="button" value="Go back!" onclick="history.back()">
+</div>
+<h3>Lamps You've Liked</h3>
