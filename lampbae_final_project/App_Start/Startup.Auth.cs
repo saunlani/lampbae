@@ -58,11 +58,11 @@ namespace lampbae_final_project
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "166667831568-dk4hfhktu1aopbg80p0oe77a3t8p0gk9.apps.googleusercontent.com",
+                ClientSecret = "_pCKxtTeRx75I7HdavM2LTr9"
+            });
         }
     }
 }

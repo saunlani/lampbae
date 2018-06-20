@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace lampbae_final_project.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
        
