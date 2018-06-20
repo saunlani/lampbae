@@ -95,7 +95,7 @@ namespace lampbae_final_project.Controllers
             Listing listing = null;
 
             // if no lampid is provided, a random id will be generated and assigned to x
-            if (lampid == null || lampid > LampDBList.Count || lampid < LampDBList.Count)
+            if (lampid == null || lampid > LampDBList.Count || lampid < 0)
             {
                 //instantiate new random object & create a new random int based on range of list count as max value
                 Random r = new Random();
@@ -117,11 +117,14 @@ namespace lampbae_final_project.Controllers
             //handling for ebay listings vs user listings (the image url structure is different)
             if (listing.EbayItemNumber == null)
             {
+                ViewData["viewItemURL"] = ("/Home/LinkImage?lampid=" + listing.ID);
                 ViewData["ImageURL"] = Url.Content("~/Content/" + listing.Image);
             }
             else
             {
+                ViewData["viewItemURL"] = listing.ItemSearchURL;
                 ViewData["ImageURL"] = listing.Image;
+
             }
 
             //test if view record exists already
@@ -245,7 +248,7 @@ namespace lampbae_final_project.Controllers
         public ActionResult Rating(int lampid, int ratingvalue)
         {
 
-            
+
             LampBaeEntities1 db = new LampBaeEntities1();
 
             //instantiate new list for lamp id's
@@ -253,12 +256,20 @@ namespace lampbae_final_project.Controllers
 
             //grab listing based on lampid provided
             Listing listing = (from p in db.Listings
-                          where p.ID == lampid
-                          select p).Single();
+                               where p.ID == lampid
+                               select p).Single();
 
+            if (listing.Rating == null)
+            {
+                listing.Rating = 0;
+                listing.Rating = listing.Rating + ratingvalue;
+            }
+            else
+            {
+                //global rating
+                listing.Rating = listing.Rating + ratingvalue;
+            }
 
-            //global rating
-            listing.Rating = listing.Rating + ratingvalue;
 
             //user rating
             //instantiate new list for ratings
@@ -273,21 +284,23 @@ namespace lampbae_final_project.Controllers
             try
             {
                 ratingrecord = (from m in db.Ratings
-                                  where m.ItemID == lampid
-                                  && m.UserID == User.Identity.Name
-                                  select m).Single();
+                                where m.ItemID == lampid
+                                && m.UserID == User.Identity.Name
+                                select m).Single();
             }
             catch (Exception e)
             { }
-            
+
             // if the record does not exist, then assign values, instantiate object and add the record.
             if (ratingrecord == null)
             {
-                ratingrecord.ItemID = lampid;
-                ratingrecord.UserID = User.Identity.Name;
-                ratingrecord.Rating1 = ratingvalue;
+                Rating rating = new Rating();
+
+                rating.ItemID = lampid;
+                rating.UserID = User.Identity.Name;
+                rating.Rating1 = ratingvalue;
                 new Rating { ItemID = lampid, UserID = User.Identity.Name, Rating1 = ratingvalue };
-                db.Ratings.Add(ratingrecord);
+                db.Ratings.Add(rating);
                 db.SaveChanges();
             }
 
@@ -296,8 +309,8 @@ namespace lampbae_final_project.Controllers
             {
                 ratingrecord.Rating1 = ratingrecord.Rating1 + ratingvalue;
             }
-
-            return RedirectToAction("Lamp");
+            db.SaveChanges();
+            return RedirectToAction("Lamps");
         }
 
         [Authorize]
@@ -358,18 +371,37 @@ namespace lampbae_final_project.Controllers
                     }
                     else
                     {
+                        listing.ItemSearchURL = (string)items[i]["viewItemURL"][0];
                         listing.Title = (string)items[i]["title"][0];
                         listing.Image = (string)items[i]["galleryURL"][0];
                         listing.PostalCode = (string)items[i]["postalCode"][0];
                         listing.EbayItemNumber = (string)items[i]["itemId"][0];
                         listing.EndDate = (DateTime)items[i]["listingInfo"][0]["endTime"][0];
                         listing.Price = (decimal)items[i]["sellingStatus"][0]["currentPrice"][0]["__value__"];
-                        new Listing() { EbayItemNumber = listing.EbayItemNumber, Title = listing.Title, PostalCode = listing.PostalCode, Image = listing.Image };
+                        new Listing() { EbayItemNumber = listing.EbayItemNumber, ItemSearchURL = listing.ItemSearchURL, Title = listing.Title, PostalCode = listing.PostalCode, Image = listing.Image };
                         db.Listings.Add(listing);
                         db.SaveChanges();
                     }
                 }
             }
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult LinkImage(int? lampid)
+        {
+            LampBaeEntities1 db = new LampBaeEntities1();
+            Listing listing;
+
+            listing = (from p in db.Listings
+                       where p.ID == lampid
+                       select p).Single();
+
+            ViewData["ImageURL"] = Url.Content("~/Content/" + listing.Image);
+            ViewData["Price"] = ("$" + listing.Price);
+            ViewData["Name"] = listing.Title;
+
+
             return View();
         }
     }

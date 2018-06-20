@@ -328,6 +328,7 @@
     <Content Include="Views\Home\NewLamp.cshtml" />
     <Content Include="Views\Home\Flag.cshtml" />
     <Content Include="Views\Home\HotLamps.cshtml" />
+    <Content Include="Views\Home\LinkImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
