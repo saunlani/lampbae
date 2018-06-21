@@ -97,7 +97,7 @@ namespace lampbae_final_project.Controllers
 
             //declaring our listing object
             Listing listing = null;
-
+            string ItemZipCode = "";
             // if no lampid is provided, a random id will be generated and assigned to x
             if (lampid == null || lampid > LampDBList.Count || lampid < 0)
             {
@@ -107,6 +107,7 @@ namespace lampbae_final_project.Controllers
                 listing = (from p in db.Listings
                            where p.ID == lampid
                            select p).Single();
+                ItemZipCode = listing.PostalCode;
             }
 
             else
@@ -115,6 +116,7 @@ namespace lampbae_final_project.Controllers
                 listing = (from p in db.Listings
                            where p.ID == lampid
                            select p).Single();
+                ItemZipCode = listing.PostalCode;
             }
 
             //handling for ebay listings vs user listings (the image url structure is different)
@@ -167,9 +169,8 @@ namespace lampbae_final_project.Controllers
             }
 
             
-            string ItemZipCode = listing.PostalCode;
             string distance = UtilityClass.GetZipCodeDistance(userZip, ItemZipCode);
-
+            ViewBag.Distance = distance;
             ViewData["CurrentLampID"] = listing.ID;
             ViewBag.UserZip = userZip;
             ViewBag.CurrentUser = User.Identity.Name;
