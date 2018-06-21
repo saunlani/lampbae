@@ -54,7 +54,8 @@ namespace lampbae_final_project.Controllers
 
             JObject JsonData = JObject.Parse(distanceData);
             string distance = (string)JsonData["distance"];
-            return distance;
+            string[] distanceSplit = distance.Split('.');
+            return distanceSplit[0];
         }
     }
 }

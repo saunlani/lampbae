@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace lampbae_final_project.Controllers
 {
+    [Authorize]
     [RequireHttps]
     public class HomeController : Controller
     {
@@ -18,7 +19,7 @@ namespace lampbae_final_project.Controllers
         {
             ViewBag.Title = "Home Page";
 
-            return View();
+            return RedirectToAction("Lamps", "Home");
         }
 
         [Authorize]
@@ -85,9 +86,11 @@ namespace lampbae_final_project.Controllers
             //instantiate new list for lamp id's
             List<Listing> LampDBList = new List<Listing>();
 
-            //populate list from model/db
+            //populate list from Listing
             LampDBList = (from p in db.Listings
-                          where p.ID != 0
+                          where p.ID != 0 ||
+                          p.EndDate > DateTime.Now //doesnt show lamps after its ended auction
+                          || p.ReportCount > 0 //doesn't show lamps that have been reported/flagged
                           select p).ToList();
 
             //instantiate new list for ratings
@@ -178,6 +181,7 @@ namespace lampbae_final_project.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult HotLamps()
         {
             LampBaeEntities1 db = new LampBaeEntities1();
@@ -187,33 +191,43 @@ namespace lampbae_final_project.Controllers
                              where p.Rating >= 1
                              select p).ToList();
 
-            ViewBag.Listings = RatedLampList;
+            ViewBag.RatedLampList = RatedLampList;
 
-
+            //consider using try catch if ratedlamplist count returns 0
             if (RatedLampList.Count > 5)
             {
-                ViewBag.Count = 5;
+                ViewBag.RatedLampListCount = 5;
+            }
+            else if (RatedLampList.Count <= 5 && RatedLampList.Count != 0)
+            {
+                ViewBag.RatedLampListCount = RatedLampList.Count;
             }
             else
             {
-                ViewBag.Count = RatedLampList.Count;
+                ViewBag.RatedLampListCount = "We don't have any popular lamps yet, check with us again soon!";
             }
 
-            List<Rating> UserLikes = (from p in db.Ratings
-                                      where p.Rating1 >= 1
-                                      && p.UserID == User.Identity.Name
-                                      select p).ToList();
-            ViewBag.Rating = UserLikes;
-            if (UserLikes.Count > 5)
+            //instantiate list
+            List<Rating> UserLikedLamps = new List<Rating>();
+            //create list based on user ratings where rating is greater 
+            //than or equal to 1 and user ID from ratings matches logged in user name
+            UserLikedLamps = (from u in db.Ratings
+                              where u.Rating1 > 0
+                              && u.UserID == User.Identity.Name
+                              select u).ToList();
+            //instantiate new list to add top liked lamps to later    
+            List<Listing> TopUserLikedLamps = new List<Listing>();
+
+            //add top 5 rated lamps to top user like lamps
+            for (int i = 0; i < 5; i++)
             {
-                ViewBag.Count1 = 5;
+                Listing listing = new Listing();
+                var LampId = UserLikedLamps[i].ItemID;
+                listing = db.Listings.Find(LampId);
+                TopUserLikedLamps.Add(listing);
             }
-            else
-            {
-                ViewBag.Count1 = UserLikes.Count;
-            }
-
-
+            //place list results in viewbag
+            ViewBag.TU = TopUserLikedLamps;
             return View();
         }
 
@@ -413,6 +427,19 @@ namespace lampbae_final_project.Controllers
 
 
             return View();
+        }
+
+        public ActionResult AddToFavorites(int lampid)
+        {
+            LampBaeEntities1 db = new LampBaeEntities1();
+
+            Favorite listing = new Favorite();
+            listing.ItemID = lampid;
+            listing.UserID = User.Identity.Name;
+            db.Favorites.Add(listing);
+            db.SaveChanges();
+
+            return RedirectToAction("Lamps");
         }
     }
 }

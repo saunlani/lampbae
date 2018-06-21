@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="LampBaeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Favorites">
+          <Key>
+            <PropertyRef Name="FavoriteID" />
+          </Key>
+          <Property Name="FavoriteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="nvarchar(max)" />
+          <Property Name="ItemID" Type="int" />
+        </EntityType>
         <EntityType Name="Listings">
           <Key>
             <PropertyRef Name="ID" />
@@ -20,6 +28,7 @@
           <Property Name="Rating" Type="int" />
           <Property Name="ReportCount" Type="int" />
           <Property Name="ItemSearchURL" Type="nvarchar(max)" />
+          <Property Name="UserID" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Ratings">
           <Key>
@@ -51,6 +60,7 @@
           <Property Name="ViewDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityContainer Name="LampBaeModelStoreContainer">
+          <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Listings" EntityType="Self.Listings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
@@ -65,6 +75,7 @@
           <EntitySet Name="Ratings" EntityType="LampBaeModel.Rating" />
           <EntitySet Name="ViewCounts" EntityType="LampBaeModel.ViewCount" />
           <EntitySet Name="Reports" EntityType="LampBaeModel.Report" />
+          <EntitySet Name="Favorites" EntityType="LampBaeModel.Favorite" />
         </EntityContainer>
         <EntityType Name="Listing">
           <Key>
@@ -81,6 +92,7 @@
           <Property Name="Rating" Type="Int32" />
           <Property Name="ReportCount" Type="Int32" />
           <Property Name="ItemSearchURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Rating">
           <Key>
@@ -111,6 +123,14 @@
           <Property Name="Info" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="Favorite">
+          <Key>
+            <PropertyRef Name="FavoriteID" />
+          </Key>
+          <Property Name="FavoriteID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemID" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -120,6 +140,7 @@
           <EntitySetMapping Name="Listings">
             <EntityTypeMapping TypeName="LampBaeModel.Listing">
               <MappingFragment StoreEntitySet="Listings">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ItemSearchURL" ColumnName="ItemSearchURL" />
                 <ScalarProperty Name="ReportCount" ColumnName="ReportCount" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
@@ -163,6 +184,15 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="LampID" ColumnName="LampID" />
                 <ScalarProperty Name="ReportID" ColumnName="ReportID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Favorites">
+            <EntityTypeMapping TypeName="LampBaeModel.Favorite">
+              <MappingFragment StoreEntitySet="Favorites">
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FavoriteID" ColumnName="FavoriteID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

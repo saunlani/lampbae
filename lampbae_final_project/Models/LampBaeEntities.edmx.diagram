@@ -5,10 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="784d29a682514afd800ff27a9c93465b" Name="Diagram1">
-        <EntityTypeShape EntityType="LampBaeModel.Listing" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LampBaeModel.Listing" Width="1.5" PointX="1" PointY="0.75" />
         <EntityTypeShape EntityType="LampBaeModel.Rating" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="LampBaeModel.ViewCount" Width="1.5" PointX="4.625" PointY="0.75" />
-        <EntityTypeShape EntityType="LampBaeModel.Report" Width="1.5" PointX="6.375" PointY="0.75" />
+        <EntityTypeShape EntityType="LampBaeModel.ViewCount" Width="1.5" PointX="4.5" PointY="0.75" />
+        <EntityTypeShape EntityType="LampBaeModel.Report" Width="1.5" PointX="6.25" PointY="0.75" />
+        <EntityTypeShape EntityType="LampBaeModel.Favorite" Width="1.5" PointX="8" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

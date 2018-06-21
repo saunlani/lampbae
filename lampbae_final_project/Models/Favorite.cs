@@ -15,32 +15,14 @@ namespace lampbae_final_project.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Listing
+public partial class Favorite
 {
 
-    public int ID { get; set; }
-
-    public string EbayItemNumber { get; set; }
-
-    public string Title { get; set; }
-
-    public string PostalCode { get; set; }
-
-    public Nullable<System.DateTime> EndDate { get; set; }
-
-    public Nullable<decimal> Price { get; set; }
-
-    public string Email { get; set; }
-
-    public string Image { get; set; }
-
-    public Nullable<int> Rating { get; set; }
-
-    public Nullable<int> ReportCount { get; set; }
-
-    public string ItemSearchURL { get; set; }
+    public int FavoriteID { get; set; }
 
     public string UserID { get; set; }
+
+    public Nullable<int> ItemID { get; set; }
 
 }
 
