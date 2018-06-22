@@ -24,6 +24,16 @@ public partial class Favorite
 
     public Nullable<int> ItemID { get; set; }
 
+    public string Title { get; set; }
+
+    public string PostalCode { get; set; }
+
+    public Nullable<decimal> Price { get; set; }
+
+    public string Image { get; set; }
+
+    public string ItemSearchURL { get; set; }
+
 }
 
 }

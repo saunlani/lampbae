@@ -26,13 +26,13 @@ This lamp is @ViewBag.Distance miles away from you!<br />
         <input name="ratingvalue" type="hidden" value=-1 />
         <input type="submit" value="Dislike" />
     </form>
+<input type="hidden" value="@ViewData["CurrentLampID"]" id="lampID" />
+        <input type="button" value="Add to Favorites!" onclick="addToFavs()"/>
+<table id="FavoriteConfirmation">
 
+</table>
+@ViewBag.FavoriteConfirmation
 
-    <form action="/Home/AddToFavorites">
-        <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
-        <input name="ratingvalue" type="hidden" value=1 />
-        <input type="submit" value="Add To Favorites" />
-    </form>
     @TempData["shortMessage"]
 
     <form action="/Home/Flag">
@@ -40,8 +40,32 @@ This lamp is @ViewBag.Distance miles away from you!<br />
         <input type="submit" value="Report" />
     </form>
 </div>
-
-@*Current Lamp ID: @ViewData["CurrentLampID"]<br />*@
-@*Your username: @ViewBag.CurrentUser<br />
+@**Current Lamp ID: @ViewData["CurrentLampID"]<br />
+*Your username: @ViewBag.CurrentUser<br />
     Your IP: @ViewBag.CurrentUserIP<br />
     Your zipcode: @ViewBag.UserZip<br />*@
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    function addToFavs() {
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/GetAddToFavorites",
+                    data: '{lampID: "' + document.getElementById("lampID").value + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        var m = "<h1>" + response + "</h1>"
+                        document.getElementById("FavoriteConfirmation")
+                            .innerHTML = m;
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+
+        };
+</script>

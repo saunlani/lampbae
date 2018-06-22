@@ -333,6 +333,7 @@
     <Content Include="Views\Home\Flag.cshtml" />
     <Content Include="Views\Home\HotLamps.cshtml" />
     <Content Include="Views\Home\LinkImage.cshtml" />
+    <Content Include="Views\Home\NewLamp2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

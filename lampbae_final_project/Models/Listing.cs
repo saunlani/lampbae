@@ -40,8 +40,6 @@ public partial class Listing
 
     public string ItemSearchURL { get; set; }
 
-    public string UserID { get; set; }
-
 }
 
 }

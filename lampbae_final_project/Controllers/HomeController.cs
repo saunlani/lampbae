@@ -22,6 +22,13 @@ namespace lampbae_final_project.Controllers
             return RedirectToAction("Lamps", "Home");
         }
 
+        public ActionResult NewLamp2()
+        {
+            ViewBag.Title = "Home Page";
+
+            return View();
+        }
+
         [Authorize]
         public ActionResult NewLamp()
         {
@@ -218,14 +225,34 @@ namespace lampbae_final_project.Controllers
             //instantiate new list to add top liked lamps to later    
             List<Listing> TopUserLikedLamps = new List<Listing>();
 
+            //instantiate new listing object
+            Listing listing = new Listing();
+
             //add top 5 rated lamps to top user like lamps
-            for (int i = 0; i < 5; i++)
+            if (UserLikedLamps.Count != 0)
             {
-                Listing listing = new Listing();
-                var LampId = UserLikedLamps[i].ItemID;
-                listing = db.Listings.Find(LampId);
-                TopUserLikedLamps.Add(listing);
+                if (UserLikedLamps.Count < 5)
+                {
+                    for (int i = 0; i < UserLikedLamps.Count; i++)
+                    {
+                        var LampId = UserLikedLamps[i].ItemID;
+                        listing = db.Listings.Find(LampId);
+                        TopUserLikedLamps.Add(listing);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        var LampId = UserLikedLamps[i].ItemID;
+                        listing = db.Listings.Find(LampId);
+                        TopUserLikedLamps.Add(listing);
+                    }
+                }
             }
+            else
+            { }
+
             //place list results in viewbag
             ViewBag.TU = TopUserLikedLamps;
             return View();
@@ -389,7 +416,7 @@ namespace lampbae_final_project.Controllers
 
                 for (int i = 0; i < items.Count; i++)
                 {
-                    if (LampDBList.Exists(x => x.EbayItemNumber.ToString() == (string)items[i]["itemId"][0]))
+                    if (LampDBList.Exists(x => x.EbayItemNumber != null && x.EbayItemNumber.ToString() == (string)items[i]["itemId"][0]))
                     {
                         //dupes detected
                     }
@@ -428,18 +455,62 @@ namespace lampbae_final_project.Controllers
 
             return View();
         }
-
-        public ActionResult AddToFavorites(int lampid)
+ 
+        public ActionResult GetAddToFavorites(int lampID)
         {
+            //instabtiate DB
             LampBaeEntities1 db = new LampBaeEntities1();
 
-            Favorite listing = new Favorite();
-            listing.ItemID = lampid;
-            listing.UserID = User.Identity.Name;
-            db.Favorites.Add(listing);
-            db.SaveChanges();
+            Listing foundListing = new Listing();
 
-            return RedirectToAction("Lamps");
+            Favorite listing = new Favorite();
+
+            List<Favorite> ListOfUserFavorites = new List<Favorite>();
+
+            //ListOfUserFavorites is all of the Favorites records where the userID is the current user
+            ListOfUserFavorites = (from u in db.Favorites
+                              where u.ItemID != 0
+                              && u.UserID == User.Identity.Name
+                              select u).ToList();
+
+            try
+            {
+                listing = (from t in db.Favorites
+                           where t.ItemID == lampID && t.UserID == User.Identity.Name
+                           select t).Single();
+            }
+            catch
+            {
+                Exception e;
+            }
+
+            string message;
+            if (listing.FavoriteID == 0)
+            {
+                // find a listing in the Listings database with the specified lamp ID
+                foundListing = (from t in db.Listings
+                                where t.ID == lampID
+                                select t).Single();
+
+                listing.ItemID = lampID;
+                listing.UserID = User.Identity.Name;
+                listing.Title = foundListing.Title;
+                listing.Image = foundListing.Image;
+                listing.Price = foundListing.Price;
+                listing.ItemSearchURL = foundListing.ItemSearchURL;
+                listing.PostalCode = foundListing.PostalCode;
+                db.Favorites.Add(listing);
+                db.SaveChanges();
+
+                message = "Lamp Added";
+            }
+            else
+            {
+                message = "Already added to Favorites!";
+            }
+            return Json(message);
+
+            
         }
     }
 }

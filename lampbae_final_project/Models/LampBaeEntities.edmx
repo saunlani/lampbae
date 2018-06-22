@@ -12,6 +12,11 @@
           <Property Name="FavoriteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="nvarchar(max)" />
           <Property Name="ItemID" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="128" />
+          <Property Name="PostalCode" Type="nchar" MaxLength="5" />
+          <Property Name="Price" Type="decimal" Precision="14" Scale="2" />
+          <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="ItemSearchURL" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Listings">
           <Key>
@@ -23,12 +28,11 @@
           <Property Name="PostalCode" Type="nchar" MaxLength="5" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="Price" Type="decimal" Precision="14" Scale="2" />
-          <Property Name="Email" Type="nvarchar" MaxLength="120" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="Rating" Type="int" />
           <Property Name="ReportCount" Type="int" />
           <Property Name="ItemSearchURL" Type="nvarchar(max)" />
-          <Property Name="UserID" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Ratings">
           <Key>
@@ -87,12 +91,11 @@
           <Property Name="PostalCode" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="Price" Type="Decimal" Precision="14" Scale="2" />
-          <Property Name="Email" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Rating" Type="Int32" />
           <Property Name="ReportCount" Type="Int32" />
           <Property Name="ItemSearchURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UserID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Rating">
           <Key>
@@ -130,6 +133,11 @@
           <Property Name="FavoriteID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ItemID" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="14" Scale="2" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemSearchURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -140,7 +148,6 @@
           <EntitySetMapping Name="Listings">
             <EntityTypeMapping TypeName="LampBaeModel.Listing">
               <MappingFragment StoreEntitySet="Listings">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ItemSearchURL" ColumnName="ItemSearchURL" />
                 <ScalarProperty Name="ReportCount" ColumnName="ReportCount" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
@@ -190,6 +197,11 @@
           <EntitySetMapping Name="Favorites">
             <EntityTypeMapping TypeName="LampBaeModel.Favorite">
               <MappingFragment StoreEntitySet="Favorites">
+                <ScalarProperty Name="ItemSearchURL" ColumnName="ItemSearchURL" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FavoriteID" ColumnName="FavoriteID" />
