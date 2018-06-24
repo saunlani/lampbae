@@ -4,7 +4,9 @@
 }
 
 <h2>@ViewBag.Title.</h2>
-@Html.ActionLink("New Lamp", "NewLamp", "Home")
+@Html.ActionLink("New Lamp", "NewLamp", "Home")<br />
+@Html.ActionLink("My Lamps", "Index", "UserListings")<br />
+@Html.ActionLink("My Friends", "Index", "Friends")
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
     <h4>Change your account settings</h4>

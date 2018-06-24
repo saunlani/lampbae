@@ -211,14 +211,20 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ListingsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserListingsController.cs" />
     <Compile Include="Controllers\UtilityClass.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Favorite.cs">
+      <DependentUpon>LampBaeEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Friend.cs">
       <DependentUpon>LampBaeEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
@@ -333,7 +339,22 @@
     <Content Include="Views\Home\Flag.cshtml" />
     <Content Include="Views\Home\HotLamps.cshtml" />
     <Content Include="Views\Home\LinkImage.cshtml" />
-    <Content Include="Views\Home\NewLamp2.cshtml" />
+    <Content Include="Views\Home\List.cshtml" />
+    <Content Include="Views\Listings\Create.cshtml" />
+    <Content Include="Views\Listings\Delete.cshtml" />
+    <Content Include="Views\Listings\Details.cshtml" />
+    <Content Include="Views\Listings\Edit.cshtml" />
+    <Content Include="Views\Listings\Index.cshtml" />
+    <Content Include="Views\UserListings\Create.cshtml" />
+    <Content Include="Views\UserListings\Delete.cshtml" />
+    <Content Include="Views\UserListings\Details.cshtml" />
+    <Content Include="Views\UserListings\Edit.cshtml" />
+    <Content Include="Views\UserListings\Index.cshtml" />
+    <Content Include="Views\Friends\Create.cshtml" />
+    <Content Include="Views\Friends\Delete.cshtml" />
+    <Content Include="Views\Friends\Details.cshtml" />
+    <Content Include="Views\Friends\Edit.cshtml" />
+    <Content Include="Views\Friends\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

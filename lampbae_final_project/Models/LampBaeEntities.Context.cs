@@ -42,6 +42,8 @@ public partial class LampBaeEntities1 : DbContext
 
     public virtual DbSet<Favorite> Favorites { get; set; }
 
+    public virtual DbSet<Friend> Friends { get; set; }
+
 }
 
 }

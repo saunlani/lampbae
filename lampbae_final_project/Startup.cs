@@ -10,5 +10,6 @@ namespace lampbae_final_project
         {
             ConfigureAuth(app);
         }
+
     }
 }

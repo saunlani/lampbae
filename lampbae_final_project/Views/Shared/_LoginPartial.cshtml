@@ -5,12 +5,21 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Dashboard", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Dashboard" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        @if (User.IsInRole("Administrator"))
+        {
+            @Html.ActionLink("Admin🔒", "Index", "Listings", routeValues: null, htmlAttributes: new { title = "Admin" })
+        }
+    </li>
+    <li>
+        @Html.ActionLink("Dashboard", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Dashboard" })
+    </li>
+    <li>
+        @Html.ActionLink("Friends", "Index", "Friends", routeValues: null, htmlAttributes: new { title = "Friends" })
+    </li>
+    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+</ul>
     }
 }
 else

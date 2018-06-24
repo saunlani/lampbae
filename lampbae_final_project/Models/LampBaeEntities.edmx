@@ -18,6 +18,14 @@
           <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="ItemSearchURL" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Friends">
+          <Key>
+            <PropertyRef Name="ConnectionID" />
+          </Key>
+          <Property Name="ConnectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID1" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserID2" Type="nvarchar" MaxLength="256" />
+        </EntityType>
         <EntityType Name="Listings">
           <Key>
             <PropertyRef Name="ID" />
@@ -65,6 +73,7 @@
         </EntityType>
         <EntityContainer Name="LampBaeModelStoreContainer">
           <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friends" EntityType="Self.Friends" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Listings" EntityType="Self.Listings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
@@ -80,6 +89,7 @@
           <EntitySet Name="ViewCounts" EntityType="LampBaeModel.ViewCount" />
           <EntitySet Name="Reports" EntityType="LampBaeModel.Report" />
           <EntitySet Name="Favorites" EntityType="LampBaeModel.Favorite" />
+          <EntitySet Name="Friends" EntityType="LampBaeModel.Friend" />
         </EntityContainer>
         <EntityType Name="Listing">
           <Key>
@@ -138,6 +148,14 @@
           <Property Name="Price" Type="Decimal" Precision="14" Scale="2" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ItemSearchURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Friend">
+          <Key>
+            <PropertyRef Name="ConnectionID" />
+          </Key>
+          <Property Name="ConnectionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID1" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserID2" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -205,6 +223,15 @@
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FavoriteID" ColumnName="FavoriteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Friends">
+            <EntityTypeMapping TypeName="LampBaeModel.Friend">
+              <MappingFragment StoreEntitySet="Friends">
+                <ScalarProperty Name="UserID2" ColumnName="UserID2" />
+                <ScalarProperty Name="UserID1" ColumnName="UserID1" />
+                <ScalarProperty Name="ConnectionID" ColumnName="ConnectionID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

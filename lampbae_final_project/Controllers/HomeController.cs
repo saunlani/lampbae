@@ -18,28 +18,22 @@ namespace lampbae_final_project.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-
             return RedirectToAction("Lamps", "Home");
         }
 
-        public ActionResult NewLamp2()
+        public ActionResult List()
         {
             ViewBag.Title = "Home Page";
-
             return View();
         }
 
-        [Authorize]
         public ActionResult NewLamp()
         {
             ViewBag.Title = "Upload A New Lamp";
-
             Listing u1 = new Listing();
-
             return View();
         }
 
-        [Authorize]
         [HttpPost]
         public ActionResult NewLamp(HttpPostedFileBase file, Listing model)
         {
@@ -79,7 +73,6 @@ namespace lampbae_final_project.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [Authorize]
         public ActionResult Lamps(int? lampid)
         {
             ViewBag.Title = "Lamps";
@@ -188,7 +181,6 @@ namespace lampbae_final_project.Controllers
             return View();
         }
 
-        [Authorize]
         public ActionResult HotLamps()
         {
             LampBaeEntities1 db = new LampBaeEntities1();
@@ -295,7 +287,6 @@ namespace lampbae_final_project.Controllers
         }
 
         //handles user and global rating.
-        [Authorize]
         public ActionResult Rating(int lampid, int ratingvalue)
         {
 
@@ -364,7 +355,7 @@ namespace lampbae_final_project.Controllers
             return RedirectToAction("Lamps");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Search()
         {
             ViewBag.Title = "Home Page";
@@ -438,7 +429,6 @@ namespace lampbae_final_project.Controllers
             return View();
         }
 
-        [Authorize]
         public ActionResult LinkImage(int? lampid)
         {
             LampBaeEntities1 db = new LampBaeEntities1();
