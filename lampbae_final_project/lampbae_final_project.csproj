@@ -359,7 +359,6 @@
     <Content Include="Views\Friends\Details.cshtml" />
     <Content Include="Views\Friends\Edit.cshtml" />
     <Content Include="Views\Friends\Index.cshtml" />
-    <Content Include="Views\Home\Favorites.cshtml" />
     <Content Include="Views\Favorites\Create.cshtml" />
     <Content Include="Views\Favorites\Delete.cshtml" />
     <Content Include="Views\Favorites\Details.cshtml" />

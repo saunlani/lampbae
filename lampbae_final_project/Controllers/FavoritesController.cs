@@ -10,6 +10,7 @@ using lampbae_final_project.Models;
 
 namespace lampbae_final_project.Controllers
 {
+    [Authorize]
     public class FavoritesController : Controller
     {
         private LampBaeEntities1 db = new LampBaeEntities1();
