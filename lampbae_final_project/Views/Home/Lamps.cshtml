@@ -3,69 +3,74 @@
     ViewBag.Title = "Lamp Display";
 }
 <br />
-
-<div style="margin: 0 auto; width: 656px; text-align: center;">
-    <a href="@ViewData["viewItemURL"]" target="_blank"> <img src="@ViewData["ImageURL"]" type="image" alt="Image" /> </a>
-</div>
-This lamp is @ViewBag.Distance miles away from you!<br />
-
-
-<div>
-    <form action="/Home/Rating">
-        <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
-        <input name="ratingvalue" type="hidden" value=1 />
-        <input type="submit" value="Like" />
-    </form>
-</div>
+<body background="/Content/Images/lampbaeglow.jpg">
+    <div style="margin: 0 auto; width: 656px; text-align: center;">
+        <a href="@ViewData["viewItemURL"]" target="_blank"> <img src="@ViewData["ImageURL"]" type="image" alt="Image" /> </a>
+    </div>
+    <text align="center">
+        <div>
+            This lamp is @ViewBag.Distance miles away from you!<br />
+        </div>
 
 
-<div>
+        <div>
+            <form action="/Home/Rating">
+                <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
+                <input name="ratingvalue" type="hidden" value=1 />
+                <input type="submit" value="Like" />
+            </form>
+        </div>
 
-    <form action="/Home/Rating">
-        <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
-        <input name="ratingvalue" type="hidden" value=-1 />
-        <input type="submit" value="Dislike" />
-    </form>
-<input type="hidden" value="@ViewData["CurrentLampID"]" id="lampID" />
-        <input type="button" value="Add to Favorites!" onclick="addToFavs()"/>
-<table id="FavoriteConfirmation">
+        <div>
 
-</table>
-@ViewBag.FavoriteConfirmation
+            <form action="/Home/Rating">
+                <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
+                <input name="ratingvalue" type="hidden" value=-1 />
+                <input type="submit" value="Dislike" />
+            </form>
+            <input type="hidden" value="@ViewData["CurrentLampID"]" id="lampID" />
+            <input type="button" value="Add to Favorites" onclick="addToFavs()" />
+            <text id="FavoriteConfirmation">
+                <small>
+                    @ViewBag.FavoriteConfirmation
+                </small>
+            </text>
 
-    @TempData["shortMessage"]
+            @*@TempData["shortMessage"]*@
 
-    <form action="/Home/Flag">
-        <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
-        <input type="submit" value="Report" />
-    </form>
-</div>
-@**Current Lamp ID: @ViewData["CurrentLampID"]<br />
-*Your username: @ViewBag.CurrentUser<br />
-    Your IP: @ViewBag.CurrentUserIP<br />
-    Your zipcode: @ViewBag.UserZip<br />*@
+            <form action="/Home/Flag">
+                <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
+                <input type="submit" value="Report" />
+            </form>
+        </div>
+    </text>
+    </body>
+    @**Current Lamp ID: @ViewData["CurrentLampID"]<br />
+        *Your username: @ViewBag.CurrentUser<br />
+            Your IP: @ViewBag.CurrentUserIP<br />
+            Your zipcode: @ViewBag.UserZip<br />*@
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript">
-    function addToFavs() {
-                $.ajax({
-                    type: "POST",
-                    url: "/Home/GetAddToFavorites",
-                    data: '{lampID: "' + document.getElementById("lampID").value + '" }',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        var m = "<h1>" + response + "</h1>"
-                        document.getElementById("FavoriteConfirmation")
-                            .innerHTML = m;
-                    },
-                    failure: function (response) {
-                        alert(response.responseText);
-                    },
-                    error: function (response) {
-                        alert(response.responseText);
-                    }
-                });
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        function addToFavs() {
+            $.ajax({
+                type: "POST",
+                url: "/Home/GetAddToFavorites",
+                data: '{lampID: "' + document.getElementById("lampID").value + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var m = "<h1>" + response + "</h1>"
+                    document.getElementById("FavoriteConfirmation")
+                        .innerHTML = m;
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
 
         };
-</script>
+    </script>

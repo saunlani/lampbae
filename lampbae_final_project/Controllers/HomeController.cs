@@ -17,7 +17,7 @@ namespace lampbae_final_project.Controllers
        
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "Lamp Bae";
             return RedirectToAction("Lamps", "Home");
         }
 
@@ -187,8 +187,13 @@ namespace lampbae_final_project.Controllers
 
             List<Listing> RatedLampList = new List<Listing>();
             RatedLampList = (from p in db.Listings
-                             where p.Rating >= 1
+                             where p.Rating >= 1 &&
+                          p.EndDate > DateTime.Now //doesnt show lamps after its ended auction
                              select p).ToList();
+
+            //randomize the llist
+            var rand = new Random();
+            RatedLampList = RatedLampList.OrderBy(x => rand.Next()).ToList();
 
             ViewBag.RatedLampList = RatedLampList;
 
@@ -244,6 +249,8 @@ namespace lampbae_final_project.Controllers
             }
             else
             { }
+
+            TopUserLikedLamps = TopUserLikedLamps.OrderBy(x => rand.Next()).ToList();
 
             //place list results in viewbag
             ViewBag.TU = TopUserLikedLamps;
