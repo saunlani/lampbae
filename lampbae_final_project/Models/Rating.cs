@@ -26,6 +26,10 @@ public partial class Rating
 
     public int RatingID { get; set; }
 
+
+
+    public virtual Listing Listing { get; set; }
+
 }
 
 }

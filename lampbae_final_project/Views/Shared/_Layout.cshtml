@@ -24,12 +24,15 @@
 
                     @if (User.Identity.Name != "")
                     {
-                    <li>
-                        @Html.ActionLink("LampBae💡", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                    </li>
-                    <li>
-                        @Html.ActionLink("Hot Lamps🔥", "HotLamps", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                    </li>
+                        <li>
+                            @Html.ActionLink("LampBae💡", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Hot Lamps🔥", "HotLamps", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("My Favorites❤️", "Index", "Favorites", new { area = "" }, new { @class = "navbar-brand" })
+                        </li>
 
                     }
                 </ul>

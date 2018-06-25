@@ -44,6 +44,8 @@ public partial class LampBaeEntities1 : DbContext
 
     public virtual DbSet<Friend> Friends { get; set; }
 
+    public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+
 }
 
 }

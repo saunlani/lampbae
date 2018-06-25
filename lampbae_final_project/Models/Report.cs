@@ -28,6 +28,10 @@ public partial class Report
 
     public Nullable<System.DateTime> DateAdded { get; set; }
 
+
+
+    public virtual Listing Listing { get; set; }
+
 }
 
 }

@@ -5,6 +5,24 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="LampBaeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="PostalCode" Type="nchar" MaxLength="5" />
+        </EntityType>
         <EntityType Name="Favorites">
           <Key>
             <PropertyRef Name="FavoriteID" />
@@ -71,13 +89,62 @@
           <Property Name="ViewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ViewDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Favorites_Listings">
+          <End Role="Listings" Type="Self.Listings" Multiplicity="0..1" />
+          <End Role="Favorites" Type="Self.Favorites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listings">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ratings_Listings">
+          <End Role="Listings" Type="Self.Listings" Multiplicity="0..1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listings">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reports_Listings">
+          <End Role="Listings" Type="Self.Listings" Multiplicity="1" />
+          <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listings">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="LampID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="LampBaeModelStoreContainer">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Friends" EntityType="Self.Friends" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Listings" EntityType="Self.Listings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ViewCounts" EntityType="Self.ViewCounts" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Favorites_Listings" Association="Self.FK_Favorites_Listings">
+            <End Role="Listings" EntitySet="Listings" />
+            <End Role="Favorites" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ratings_Listings" Association="Self.FK_Ratings_Listings">
+            <End Role="Listings" EntitySet="Listings" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reports_Listings" Association="Self.FK_Reports_Listings">
+            <End Role="Listings" EntitySet="Listings" />
+            <End Role="Reports" EntitySet="Reports" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -90,6 +157,19 @@
           <EntitySet Name="Reports" EntityType="LampBaeModel.Report" />
           <EntitySet Name="Favorites" EntityType="LampBaeModel.Favorite" />
           <EntitySet Name="Friends" EntityType="LampBaeModel.Friend" />
+          <EntitySet Name="AspNetUsers" EntityType="LampBaeModel.AspNetUser" />
+          <AssociationSet Name="FK_Favorites_Listings" Association="LampBaeModel.FK_Favorites_Listings">
+            <End Role="Listing" EntitySet="Listings" />
+            <End Role="Favorite" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ratings_Listings" Association="LampBaeModel.FK_Ratings_Listings">
+            <End Role="Listing" EntitySet="Listings" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reports_Listings" Association="LampBaeModel.FK_Reports_Listings">
+            <End Role="Listing" EntitySet="Listings" />
+            <End Role="Report" EntitySet="Reports" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Listing">
           <Key>
@@ -106,6 +186,9 @@
           <Property Name="Rating" Type="Int32" />
           <Property Name="ReportCount" Type="Int32" />
           <Property Name="ItemSearchURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Favorites" Relationship="LampBaeModel.FK_Favorites_Listings" FromRole="Listing" ToRole="Favorite" />
+          <NavigationProperty Name="Ratings" Relationship="LampBaeModel.FK_Ratings_Listings" FromRole="Listing" ToRole="Rating" />
+          <NavigationProperty Name="Reports" Relationship="LampBaeModel.FK_Reports_Listings" FromRole="Listing" ToRole="Report" />
         </EntityType>
         <EntityType Name="Rating">
           <Key>
@@ -115,6 +198,7 @@
           <Property Name="ItemID" Type="Int32" />
           <Property Name="Rating1" Type="Int32" />
           <Property Name="RatingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Listing" Relationship="LampBaeModel.FK_Ratings_Listings" FromRole="Rating" ToRole="Listing" />
         </EntityType>
         <EntityType Name="ViewCount">
           <Key>
@@ -135,6 +219,7 @@
           <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Info" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Listing" Relationship="LampBaeModel.FK_Reports_Listings" FromRole="Report" ToRole="Listing" />
         </EntityType>
         <EntityType Name="Favorite">
           <Key>
@@ -148,6 +233,7 @@
           <Property Name="Price" Type="Decimal" Precision="14" Scale="2" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ItemSearchURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Listing" Relationship="LampBaeModel.FK_Favorites_Listings" FromRole="Favorite" ToRole="Listing" />
         </EntityType>
         <EntityType Name="Friend">
           <Key>
@@ -157,6 +243,60 @@
           <Property Name="UserID1" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="UserID2" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Favorites_Listings">
+          <End Type="LampBaeModel.Listing" Role="Listing" Multiplicity="0..1" />
+          <End Type="LampBaeModel.Favorite" Role="Favorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listing">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Favorite">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ratings_Listings">
+          <End Type="LampBaeModel.Listing" Role="Listing" Multiplicity="0..1" />
+          <End Type="LampBaeModel.Rating" Role="Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listing">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reports_Listings">
+          <End Type="LampBaeModel.Listing" Role="Listing" Multiplicity="1" />
+          <End Type="LampBaeModel.Report" Role="Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Listing">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="LampID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -232,6 +372,25 @@
                 <ScalarProperty Name="UserID2" ColumnName="UserID2" />
                 <ScalarProperty Name="UserID1" ColumnName="UserID1" />
                 <ScalarProperty Name="ConnectionID" ColumnName="ConnectionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="LampBaeModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -18,6 +18,19 @@ using System;
 public partial class Listing
 {
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public Listing()
+    {
+
+        this.Favorites = new HashSet<Favorite>();
+
+        this.Ratings = new HashSet<Rating>();
+
+        this.Reports = new HashSet<Report>();
+
+    }
+
+
     public int ID { get; set; }
 
     public string EbayItemNumber { get; set; }
@@ -39,6 +52,20 @@ public partial class Listing
     public Nullable<int> ReportCount { get; set; }
 
     public string ItemSearchURL { get; set; }
+
+
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Favorite> Favorites { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Rating> Ratings { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Report> Reports { get; set; }
 
 }
 

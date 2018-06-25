@@ -11,6 +11,10 @@
         <EntityTypeShape EntityType="LampBaeModel.Report" Width="1.5" PointX="6.25" PointY="0.75" />
         <EntityTypeShape EntityType="LampBaeModel.Favorite" Width="1.5" PointX="8" PointY="0.75" />
         <EntityTypeShape EntityType="LampBaeModel.Friend" Width="1.5" PointX="2.75" PointY="2.75" />
+        <EntityTypeShape EntityType="LampBaeModel.AspNetUser" Width="1.5" PointX="0.75" PointY="5.75" />
+        <AssociationConnector Association="LampBaeModel.FK_Favorites_Listings" />
+        <AssociationConnector Association="LampBaeModel.FK_Ratings_Listings" />
+        <AssociationConnector Association="LampBaeModel.FK_Reports_Listings" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

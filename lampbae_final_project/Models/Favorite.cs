@@ -34,6 +34,10 @@ public partial class Favorite
 
     public string ItemSearchURL { get; set; }
 
+
+
+    public virtual Listing Listing { get; set; }
+
 }
 
 }

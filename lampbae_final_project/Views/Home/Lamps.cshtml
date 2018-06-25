@@ -57,7 +57,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                var m = "<h1>" + response + "</h1>"
+                var m = response
                 document.getElementById("FavoriteConfirmation")
                     .innerHTML = m;
             },

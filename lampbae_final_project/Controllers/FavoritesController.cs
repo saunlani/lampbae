@@ -10,110 +10,112 @@ using lampbae_final_project.Models;
 
 namespace lampbae_final_project.Controllers
 {
-    [Authorize]
-    public class FriendsController : Controller
+    public class FavoritesController : Controller
     {
         private LampBaeEntities1 db = new LampBaeEntities1();
 
-        // GET: Friends
+        // GET: Favorites
         public ActionResult Index()
         {
-            string currentUserId = User.Identity.Name;
-            var thisUsersFriends = db.Friends.Where(e => e.UserID1 == currentUserId || e.UserID2 == currentUserId);
-            return View(thisUsersFriends.ToList());
+            var favorites = db.Favorites.Include(f => f.Listing);
+            return View(favorites.ToList());
         }
 
-        // GET: Friends/Details/5
+        // GET: Favorites/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Friend friend = db.Friends.Find(id);
-            if (friend == null)
+            Favorite favorite = db.Favorites.Find(id);
+            if (favorite == null)
             {
                 return HttpNotFound();
             }
-            return View(friend);
+            return View(favorite);
         }
 
-        // GET: Friends/Create
+        // GET: Favorites/Create
         public ActionResult Create()
         {
+            ViewBag.ItemID = new SelectList(db.Listings, "ID", "EbayItemNumber");
             return View();
         }
 
-        // POST: Friends/Create
+        // POST: Favorites/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ConnectionID,UserID1,UserID2")] Friend friend)
+        public ActionResult Create([Bind(Include = "FavoriteID,UserID,ItemID,Title,PostalCode,Price,Image,ItemSearchURL")] Favorite favorite)
         {
             if (ModelState.IsValid)
             {
-                db.Friends.Add(friend);
+                db.Favorites.Add(favorite);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(friend);
+            ViewBag.ItemID = new SelectList(db.Listings, "ID", "EbayItemNumber", favorite.ItemID);
+            return View(favorite);
         }
 
-        // GET: Friends/Edit/5
+        // GET: Favorites/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Friend friend = db.Friends.Find(id);
-            if (friend == null)
+            Favorite favorite = db.Favorites.Find(id);
+            if (favorite == null)
             {
                 return HttpNotFound();
             }
-            return View(friend);
+            ViewBag.ItemID = new SelectList(db.Listings, "ID", "EbayItemNumber", favorite.ItemID);
+            return View(favorite);
         }
 
-        // POST: Friends/Edit/5
+        // POST: Favorites/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ConnectionID,UserID1,UserID2")] Friend friend)
+        public ActionResult Edit([Bind(Include = "FavoriteID,UserID,ItemID,Title,PostalCode,Price,Image,ItemSearchURL")] Favorite favorite)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(friend).State = EntityState.Modified;
+                db.Entry(favorite).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(friend);
+            ViewBag.ItemID = new SelectList(db.Listings, "ID", "EbayItemNumber", favorite.ItemID);
+            return View(favorite);
         }
 
-        // GET: Friends/Delete/5
+        // GET: Favorites/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Friend friend = db.Friends.Find(id);
-            if (friend == null)
+            Favorite favorite = db.Favorites.Find(id);
+            if (favorite == null)
             {
                 return HttpNotFound();
             }
-            return View(friend);
+            return View(favorite);
         }
 
-        // POST: Friends/Delete/5
+        // POST: Favorites/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Friend friend = db.Friends.Find(id);
-            db.Friends.Remove(friend);
+            Favorite favorite = db.Favorites.Find(id);
+            db.Favorites.Remove(favorite);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -125,36 +127,6 @@ namespace lampbae_final_project.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        public ActionResult GetFriendsByEmail(string email)
-        {
-            //instantiate DB
-            LampBaeEntities1 db = new LampBaeEntities1();
-
-            AspNetUser friend = new AspNetUser();
-
-
-            List<AspNetUser> SearchResults = new List<AspNetUser>();
-
-            if (email != "")
-            {
-                try
-                {
-                    SearchResults = (from u in db.AspNetUsers
-                                     where u.Email.Contains(email)
-                                     select u).ToList();
-                }
-                catch
-                {
-                    Exception e;
-                }
-            }
-
-
-            return Json(SearchResults);
-
-
         }
     }
 }

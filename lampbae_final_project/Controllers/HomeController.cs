@@ -14,7 +14,6 @@ namespace lampbae_final_project.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
-       
         public ActionResult Index()
         {
             ViewBag.Title = "Lamp Bae";
@@ -579,7 +578,3 @@ namespace lampbae_final_project.Controllers
         }
     }
 }
-
-
-//UserFriendPairs.RemoveAll(item => item.UserID1 == User.Identity.Name.ToString());
-//UserFriendPairs.RemoveAll(item => item.UserID2 == User.Identity.Name.ToString());
