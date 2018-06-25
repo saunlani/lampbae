@@ -44,33 +44,34 @@
             </form>
         </div>
     </text>
-    </body>
-    @**Current Lamp ID: @ViewData["CurrentLampID"]<br />
-        *Your username: @ViewBag.CurrentUser<br />
-            Your IP: @ViewBag.CurrentUserIP<br />
-            Your zipcode: @ViewBag.UserZip<br />*@
+</body>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script type="text/javascript">
-        function addToFavs() {
-            $.ajax({
-                type: "POST",
-                url: "/Home/GetAddToFavorites",
-                data: '{lampID: "' + document.getElementById("lampID").value + '" }',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    var m = "<h1>" + response + "</h1>"
-                    document.getElementById("FavoriteConfirmation")
-                        .innerHTML = m;
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                }
-            });
 
-        };
-    </script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    function addToFavs() {
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetAddToFavorites",
+            data: '{lampID: "' + document.getElementById("lampID").value + '" }',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                var m = "<h1>" + response + "</h1>"
+                document.getElementById("FavoriteConfirmation")
+                    .innerHTML = m;
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    };
+</script>
+@**Current Lamp ID: @ViewData["CurrentLampID"]<br />
+    *Your username: @ViewBag.CurrentUser<br />
+        Your IP: @ViewBag.CurrentUserIP<br />
+        Your zipcode: @ViewBag.UserZip<br />*@

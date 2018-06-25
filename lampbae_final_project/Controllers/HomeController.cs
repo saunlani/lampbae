@@ -249,11 +249,79 @@ namespace lampbae_final_project.Controllers
             }
             else
             { }
-
             TopUserLikedLamps = TopUserLikedLamps.OrderBy(x => rand.Next()).ToList();
-
             //place list results in viewbag
             ViewBag.TU = TopUserLikedLamps;
+
+
+            List<Friend> UserFriendPairs = new List<Friend>();
+
+            UserFriendPairs = (from u in db.Friends
+                               where u.UserID1 == User.Identity.Name ||
+                               u.UserID2 == User.Identity.Name
+                               select u).ToList();
+
+            List<string> FriendsList = new List<string>();
+
+            foreach (Friend friends in UserFriendPairs)
+            {
+                if (friends.UserID1 != User.Identity.Name.ToString() &&
+                    
+                    !FriendsList.Contains(friends.UserID1))
+                    
+                {
+                    FriendsList.Add(friends.UserID1);
+                }
+
+                else if (
+                    friends.UserID2 != User.Identity.Name.ToString() && 
+                    !FriendsList.Contains(friends.UserID2))
+                {
+                    FriendsList.Add(friends.UserID2);
+                }
+            }
+
+            List<Rating> FriendsLikedLamps = new List<Rating>();
+
+            foreach (string friend in FriendsList)
+            {
+                FriendsLikedLamps = (from u in db.Ratings
+                                     where u.Rating1 > 0
+                                     && u.UserID == friend
+                                     select u).ToList();
+            }
+
+
+
+            //instantiate new list to add top liked lamps to later    
+            List<Listing> FriendsLikedLampListings = new List<Listing>();
+
+            //add 5 rated lamps to FriendsLikedLampListings
+            if (FriendsLikedLamps.Count != 0)
+            {
+                if (FriendsLikedLamps.Count < 5)
+                {
+                    for (int i = 0; i < FriendsLikedLamps.Count; i++)
+                    {
+                        var LampId = FriendsLikedLamps[i].ItemID;
+                        listing = db.Listings.Find(LampId);
+                        FriendsLikedLampListings.Add(listing);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        var LampId = FriendsLikedLamps[i].ItemID;
+                        listing = db.Listings.Find(LampId);
+                        FriendsLikedLampListings.Add(listing);
+                    }
+                }
+            }
+            else
+            { }
+            FriendsLikedLampListings = FriendsLikedLampListings.OrderBy(x => rand.Next()).ToList();
+            ViewBag.FriendsLamps = FriendsLikedLampListings;
             return View();
         }
 
@@ -511,3 +579,7 @@ namespace lampbae_final_project.Controllers
         }
     }
 }
+
+
+//UserFriendPairs.RemoveAll(item => item.UserID1 == User.Identity.Name.ToString());
+//UserFriendPairs.RemoveAll(item => item.UserID2 == User.Identity.Name.ToString());

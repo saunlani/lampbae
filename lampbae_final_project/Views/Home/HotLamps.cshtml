@@ -28,3 +28,14 @@
             }
         </table>
     </div>
+
+    <h3>Lamps Your Friends Have Liked</h3>
+
+    <div>
+        <table>
+            @foreach (var x in ViewBag.FriendsLamps)
+            {
+                <td><a href="@x.ItemSearchURL" type="image" alt="Lamp Bae"><img src="@x.Image" /></a></td>
+            }
+        </table>
+    </div>
