@@ -1,19 +1,12 @@
 ﻿@model IEnumerable<lampbae_final_project.Models.Favorite>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "My Favorites";
 }
+<body background="/Content/Images/lampbaeback.png">
+<h2>My Favorites</h2>
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserID)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
@@ -26,12 +19,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Image)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemSearchURL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Listing.EbayItemNumber)
-        </th>
         <th></th>
     </tr>
 
@@ -39,9 +26,6 @@
     if (item.UserID == User.Identity.Name)
     {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserID)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
@@ -52,17 +36,9 @@
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Image)
+            <a href="@Html.DisplayFor(modelItem => item.ItemSearchURL)" target="_blank"><img src="@Html.DisplayFor(modelItem => item.Image)" /></a>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ItemSearchURL)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Listing.EbayItemNumber)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FavoriteID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.FavoriteID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.FavoriteID })
         </td>
     </tr>
@@ -71,3 +47,4 @@
 }
 
 </table>
+    </body>

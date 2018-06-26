@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
+using lampbae_final_project.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using lampbae_final_project.Models;
+using System.IO;
+
 
 namespace lampbae_final_project.Controllers
 {
@@ -85,6 +85,7 @@ namespace lampbae_final_project.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 db.Entry(listing).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
