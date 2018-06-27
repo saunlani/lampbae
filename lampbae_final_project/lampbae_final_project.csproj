@@ -295,7 +295,6 @@
     <Content Include="Models\LampBaeEntities.edmx.diagram">
       <DependentUpon>LampBaeEntities.edmx</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\lampbae - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -344,6 +343,7 @@
     <Content Include="Views\Home\Flag.cshtml" />
     <Content Include="Views\Home\HotLamps.cshtml" />
     <Content Include="Views\Home\LinkImage.cshtml" />
+    <Content Include="Views\Home\List.cshtml" />
     <Content Include="Views\Listings\Create.cshtml" />
     <Content Include="Views\Listings\Delete.cshtml" />
     <Content Include="Views\Listings\Details.cshtml" />
