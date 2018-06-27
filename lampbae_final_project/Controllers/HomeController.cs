@@ -124,11 +124,15 @@ namespace lampbae_final_project.Controllers
             //handling for ebay listings vs user listings (the image url structure is different)
             if (listing.EbayItemNumber == null)
             {
+                ViewData["ItemTitle"] = listing.Title;
+                ViewData["Price"] = listing.Price;
                 ViewData["viewItemURL"] = ("/Home/LinkImage?lampid=" + listing.ID);
                 ViewData["ImageURL"] = Url.Content("~/Content/" + listing.Image);
             }
             else
             {
+                ViewData["ItemTitle"] = listing.Title;
+                ViewData["Price"] = listing.Price;
                 ViewData["viewItemURL"] = listing.ItemSearchURL;
                 ViewData["ImageURL"] = listing.Image;
 
@@ -515,6 +519,8 @@ namespace lampbae_final_project.Controllers
             ViewData["ImageURL"] = Url.Content("~/Content/" + listing.Image);
             ViewData["Price"] = ("$" + listing.Price);
             ViewData["Name"] = listing.Title;
+            ViewData["ContactInfo"] = listing.Email;
+            ViewData["CurrentLampID"] = listing.ID;
 
 
             return View();

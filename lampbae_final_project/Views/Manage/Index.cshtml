@@ -2,17 +2,35 @@
 @{
     ViewBag.Title = "Manage";
 }
-<body background="/Content/Images/lampbaeback.png">
-    <h2>@ViewBag.Title.</h2>
-    @Html.ActionLink("New Lamp", "NewLamp", "Home")<br />
-    @Html.ActionLink("My Lamps", "Index", "UserListings")<br />
-    @Html.ActionLink("My Friends", "Index", "Friends")
-    <p class="text-success">@ViewBag.StatusMessage</p>
+<body background="/Content/Images/lampbaeback.png" style="background-size:cover;">
+    <div>
+        <text align="center">
+            <h2>@ViewBag.Title</h2>
+            <div>
+                <form action="/Home/NewLamp">
+                    <input type="submit" value="New Lamp" style="background-color:goldenrod" /><br />
+                </form>
+            </div>
+            <br />
+            <div>
+                <form action="/UserListings/Index">
+                    <input type="submit" value="My Lamps" style="background-color:goldenrod" /><br />
+                </form>
+            </div>
+            <br />
+            <div>
+                <form action="/Friends/Index">
+                    <input type="submit" value="My Friends" style="background-color:goldenrod" /><br />
+                </form>
+            </div>
+            <br />
+            <p class="text-success">@ViewBag.StatusMessage</p>
+    </div>
     <div>
         <h4>Change your account settings</h4>
         <hr />
         <dl class="dl-horizontal">
-            <dt>Password:</dt>
+            <dt style="text-align:center">Password:</dt>
             <dd>
                 [
                 @if (Model.HasPassword)
@@ -25,7 +43,8 @@
                 }
                 ]
             </dd>
-            <dt>External Logins:</dt>
+
+            <dt style="text-align:center">External Logins:</dt>
             <dd>
                 @Model.Logins.Count [
                 @Html.ActionLink("Manage", "ManageLogins") ]
@@ -87,4 +106,4 @@
             </dd>
         </dl>
     </div>
-    </body>
+</body>
