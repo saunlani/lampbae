@@ -4,47 +4,50 @@
     ViewBag.Title = "My Favorites";
 }
 <body background="/Content/Images/lampbaeback.png">
-<h2>My Favorites</h2>
+    <div align="center">
+        <h2>My Favorites</h2>
 
-<table class="table">
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PostalCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th></th>
-    </tr>
+        <table class="table">
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostalCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th></th>
+            </tr>
 
-@foreach (var item in Model) {
-    if (item.UserID == User.Identity.Name)
-    {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostalCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            <a href="@Html.DisplayFor(modelItem => item.ItemSearchURL)" target="_blank"><img src="@Html.DisplayFor(modelItem => item.Image)" /></a>
-        </td>
-        <td>
-            @Html.ActionLink("Delete", "Delete", new { id=item.FavoriteID })
-        </td>
-    </tr>
+            @foreach (var item in Model)
+            {
+                if (item.UserID == User.Identity.Name)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PostalCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            <a href="@Html.DisplayFor(modelItem => item.ItemSearchURL)" target="_blank"><img src="@Html.DisplayFor(modelItem => item.Image)" /></a>
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "Delete", new { id = item.FavoriteID })
+                        </td>
+                    </tr>
 
-    }
-}
+                }
+            }
 
-</table>
+        </table>
+    </div>
     </body>

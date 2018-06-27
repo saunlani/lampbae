@@ -4,34 +4,36 @@
     ViewBag.Title = "Friends";
 }
 <body background="/Content/Images/lampbaeback.png">
-    <h2>My Friends</h2>
-    <br />
-    @Html.ActionLink("Add New Friend", "Create")
-    <table class="table">
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @if (item.UserID1 == User.Identity.Name)
-                    {
-                    }
-                    else
-                    {
-                        @item.UserID1
-                    }
-                    @if (item.UserID2 == User.Identity.Name)
-                    {
-                    }
-                    else
-                    {
-                        @item.UserID2
-                    }
-                </td>
-                <td>
-                    @Html.ActionLink("Remove Friend", "Delete", new { id = item.ConnectionID })
-                </td>
-            </tr>
-        }
+    <div align="center">
+        <h2>My Friends</h2>
+        <br />
+        @Html.ActionLink("Add New Friend", "Create")
+        <table class="table">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.UserID1 == User.Identity.Name)
+                        {
+                        }
+                        else
+                        {
+                            @item.UserID1
+                        }
+                        @if (item.UserID2 == User.Identity.Name)
+                        {
+                        }
+                        else
+                        {
+                            @item.UserID2
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Remove Friend", "Delete", new { id = item.ConnectionID })
+                    </td>
+                </tr>
+            }
 
-    </table>
+        </table>
+    </div>
     </body>
