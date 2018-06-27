@@ -1,43 +1,45 @@
-﻿@model lampbae_final_project.Models.Listing
+﻿
+@model lampbae_final_project.Models.Listing
 @using lampbae_final_project.Models;
 @using System.Data;
 @{
     ViewBag.Title = "HotLamps";
 }
-<body background="/Content/Images/lampbaeglow.jpg">
-    <div align ="center">
-    <h3>Lamps People Have Liked</h3>
-    <div>
+<body background="/Content/Images/lampbaeglow.jpg" style="background-size:cover">
+    <div align="center">
+        <h3>Lamps People Have Liked</h3>
+        <div>
 
-        <table>
-            @for (int i = 0; i < ViewBag.RatedLampListCount; i++)
+            <table>
+                @for (int i = 0; i < ViewBag.RatedLampListCount; i++)
             {
-                <a href="@ViewBag.RatedLampList[i].ItemSearchURL"> <img src="@ViewBag.RatedLampList[i].Image" type="image" alt="Lamp Bae" /></a>
-            }
-        </table>
-    </div>
+                    <a href="@ViewBag.RatedLampList[i].ItemSearchURL"> <img src="@ViewBag.RatedLampList[i].Image" type="image" alt="Lamp Bae" /></a>
+                }
+            </table>
+        </div>
 
 
 
-    <h3>Lamps You've Liked</h3>
+        <h3>Lamps You've Liked</h3>
 
-    <div>
-        <table>
-            @foreach (var x in ViewBag.TU)
+        <div>
+            <table>
+                @foreach (var x in ViewBag.TU)
             {
-                <td><a href="@x.ItemSearchURL" type="image" alt="Lamp Bae"><img src="@x.Image" /></a></td>
-            }
-        </table>
-    </div>
+                    <td><a href="@x.ItemSearchURL" type="image" alt="Lamp Bae"><img src="@x.Image" /></a></td>
+                }
+            </table>
+        </div>
 
-    <h3>Lamps Your Friends Have Liked</h3>
+        <h3>Lamps Your Friends Have Liked</h3>
 
-    <div>
-        <table>
-            @foreach (var x in ViewBag.FriendsLamps)
+        <div>
+            <table>
+                @foreach (var x in ViewBag.FriendsLamps)
             {
-                <td><a href="@x.ItemSearchURL" type="image" alt="Lamp Bae"><img src="@x.Image" /></a></td>
-            }
-        </table>
+                    <td><a href="@x.ItemSearchURL" type="image" alt="Lamp Bae"><img src="@x.Image" /></a></td>
+                }
+            </table>
+        </div>
     </div>
-    </div>
+    </body>
