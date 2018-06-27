@@ -15,7 +15,8 @@ namespace lampbae_final_project.Controllers
         // gets IP address of user
         public static string GetIP()
         {
-            string userIP = new WebClient().DownloadString("http://icanhazip.com");
+            //string userIP1 = new WebClient().DownloadString("http://icanhazip.com");
+            string userIP = HttpContext.Current.Request.UserHostAddress;
             return userIP;
         }
 
