@@ -364,6 +364,7 @@
     <Content Include="Views\Favorites\Details.cshtml" />
     <Content Include="Views\Favorites\Edit.cshtml" />
     <Content Include="Views\Favorites\Index.cshtml" />
+    <Content Include="Views\Friends\FriendLampList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

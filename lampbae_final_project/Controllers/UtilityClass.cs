@@ -17,6 +17,10 @@ namespace lampbae_final_project.Controllers
         {
             //string userIP1 = new WebClient().DownloadString("http://icanhazip.com");
             string userIP = HttpContext.Current.Request.UserHostAddress;
+            if (userIP == "::1")
+            {
+                userIP = new WebClient().DownloadString("http://icanhazip.com");
+            }
             return userIP;
         }
 

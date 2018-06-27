@@ -156,5 +156,53 @@ namespace lampbae_final_project.Controllers
 
 
         }
+
+        public ActionResult FriendLampList (string friendID)
+        {
+            LampBaeEntities1 db = new LampBaeEntities1();
+
+            List<Rating> FriendLampRList = new List<Rating>();
+            FriendLampRList = (from p in db.Ratings
+                             where p.UserID == friendID
+                             select p).ToList();
+
+            //randomize the llist
+            var rand = new Random();
+            FriendLampRList = FriendLampRList.OrderBy(x => rand.Next()).ToList();
+
+            ViewBag.FriendLampRList = FriendLampRList;
+
+            Listing listing = new Listing();
+
+            List<Listing> FriendLampListings = new List<Listing>();
+
+            if (FriendLampRList.Count != 0)
+            {
+                if (FriendLampRList.Count < 5)
+                {
+                    for (int i = 0; i < FriendLampRList.Count; i++)
+                    {
+                        var LampId = FriendLampRList[i].ItemID;
+                        listing = db.Listings.Find(LampId);
+                        FriendLampListings.Add(listing);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        var LampId = FriendLampRList[i].ItemID;
+                        listing = db.Listings.Find(LampId);
+                        FriendLampListings.Add(listing);
+                    }
+                }
+            }
+            else
+            { }
+
+            ViewBag.FriendLampListings = FriendLampListings;
+            return View();
+
+        }
     }
 }
