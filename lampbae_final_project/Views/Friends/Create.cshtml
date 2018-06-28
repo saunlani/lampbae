@@ -18,7 +18,7 @@
 
             <div class="form-group">
                 <label>Your Friend's Email</label>
-                @Html.EditorFor(model => model.UserID2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.UserID2, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                 @Html.ValidationMessageFor(model => model.UserID2, "", new { @class = "text-danger" })
 
             </div>

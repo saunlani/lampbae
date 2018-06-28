@@ -7,7 +7,8 @@
 <div align="center">
     <h4>Reason for Report:</h4>
     <form action="/Home/SubmitFlag">
-        <textarea name="info" cols="40" rows="5"></textarea><br />
+        <textarea name="info" required cols="40" rows="5"></textarea>
+        <br />
         <input name="lampid" type="hidden" value="@ViewBag.DaLamp" />
         <input type="submit" value="Submit" />
     </form>
