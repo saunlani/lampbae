@@ -3,11 +3,13 @@
 @{
     ViewBag.Title = "Friends";
 }
-<body background="/Content/Images/lampbaeback.png">
-    <div align="center">
+<body background="/Content/Blue_Light.jpg" style="background-size:cover">
+
+    <div style="margin: 0 auto; width: 656px; text-align: center;">
         <h2>My Friends</h2>
         <br />
-        @Html.ActionLink("Add New Friend", "Create")
+        <button> @Html.ActionLink("Add New Friend", "Create")</button>
+
         <table class="table">
             @foreach (var item in Model)
             {
@@ -36,4 +38,4 @@
 
         </table>
     </div>
-    </body>
+</body>

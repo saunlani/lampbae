@@ -2,18 +2,18 @@
 @{
     ViewBag.Title = "Lamp Display";
 }
-<body background="/Content/Images/lampbaeback.png">
+<body background="/Content/Blue_Light.jpg" style="background-size:cover">
 
     <br />
     <text align="center">
         <div>
-            <h2>
+            <h2 style="color:white">
                 @ViewData["ItemTitle"]<br />
             </h2>
         </div>
 
         <br />
-        <body background="/Content/Images/lampbaeglow.jpg" style="background-size:cover">
+       
             <div style="margin: 0 auto; align-content: center; text-align: center;">
                 <a href="@ViewData["viewItemURL"]" target="_blank">
                     <img src="@ViewData["ImageURL"]" type="image" alt="Image" style="border: inset 10px" ;
@@ -40,7 +40,7 @@
                         <form action="/Home/Rating">
                             <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
                             <input name="ratingvalue" type="hidden" value=1 />
-                            <input type="submit" value="Like" />
+                            <input type="submit" value="Like" style="background-color:lightslategrey"/>
                         </form>
                     </div>
 
