@@ -1,12 +1,10 @@
-﻿
+
 @{
     ViewBag.Title = "LinkImage";
 }
 
-
-<body background="/Content/Blue_Light.jpg" style="background-size:cover">
+<body background="/Content/Images/lampbaeback.png" style="background-size:cover;">
     <text align="center">
-
         <div>
             <h2>
                 @ViewData["Name"]<br />
@@ -18,7 +16,6 @@
   image-rendering: pixelated;" />
         </div>
         <text align="center">
-
             <div>
                 <h3> @ViewData["Price"]<br /> </h3>
             </div>
@@ -29,39 +26,37 @@
                 </div>
                 <div>
 
-
                     <input type="hidden" value="@ViewData["CurrentLampID"]" id="lampID" />
                     <input type="button" value="Add to Favorites" onclick="addToFavs()" />
                     <text id="FavoriteConfirmation" style="font-family:'Times New Roman', Times, serif, Times, serif; fon">
-
 
                         <small>
                             @ViewBag.FavoriteConfirmation
                         </small>
                     </text>
                 </div>
-
-
-                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-                <script type="text/javascript">
-                    function addToFavs() {
-                        $.ajax({
-                            type: "POST",
-                            url: "/Home/GetAddToFavorites",
-                            data: '{lampID: "' + document.getElementById("lampID").value + '" }',
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (response) {
-                                var m = "<h5>" + response + "</h5>"
-                                document.getElementById("FavoriteConfirmation")
-                                    .innerHTML = m;
-                            },
-                            failure: function (response) {
-                                alert(response.responseText);
-                            },
-                            error: function (response) {
-                                alert(response.responseText);
-                            }
-                        });
-                </script>
 </body>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    function addToFavs() {
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetAddToFavorites",
+            data: '{lampID: "' + document.getElementById("lampID").value + '" }',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                var m = response
+                document.getElementById("FavoriteConfirmation")
+                    .innerHTML = m;
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    };
+</script>

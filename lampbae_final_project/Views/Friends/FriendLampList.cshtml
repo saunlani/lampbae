@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "FriendLampList";
+}
+<div align="center">
+    <h2>This Friend Liked These Lamps</h2>
+
+    @*@ViewBag.FriendLampList
+        @ViewBag.FriendLampListCount*@
+    <div>
+        <table>
+            @foreach (var x in ViewBag.FriendLampListings)
+            {
+                <td><a href="@x.ItemSearchURL" type="image" alt="Lamp Bae"><img src="@x.Image" /></a></td>
+            }
+        </table>
+    </div>
+</div>

@@ -20,7 +20,8 @@
                         }
                         else
                         {
-                            @item.UserID1
+                        
+                            @item.UserID1 
                         }
                         @if (item.UserID2 == User.Identity.Name)
                         {
@@ -31,7 +32,15 @@
                         }
                     </td>
                     <td>
-                        @Html.ActionLink("Remove Friend", "Delete", new { id = item.ConnectionID })
+                        <t>@Html.ActionLink("Remove Friend", "Delete", new { id = item.ConnectionID })</t>
+                        @if (item.UserID1 == User.Identity.Name)
+                        {
+                            @Html.ActionLink("View Liked Lamps", "FriendLampList", new { friendID = item.UserID2 })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("View Liked Lamps", "FriendLampList", new { friendID = item.UserID1 })
+                        }
                     </td>
                 </tr>
             }
