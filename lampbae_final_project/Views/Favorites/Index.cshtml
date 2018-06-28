@@ -3,24 +3,24 @@
 @{
     ViewBag.Title = "My Favorites";
 }
-<body background="/Content/Images/lampbaeback.png">
+<body background="/Content/Blue_Light.jpg" style="background-size:cover;background-attachment:fixed">
     <div align="center">
-        <h2>My Favorites</h2>
+        <h2 style="color:white; margin-left: 550px; margin-right:550px">My Favorites</h2>
 
         <table class="table">
-            <th>
+            <th style = "width:20%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px;">
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
+            <th style = "width:20%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px">
                 @Html.DisplayNameFor(model => model.PostalCode)
             </th>
-            <th>
+            <th style = "width:20%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px">
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th>
+            <th style = "width:20%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px">
                 @Html.DisplayNameFor(model => model.Image)
             </th>
-            <th></th>
+            <th style = "width:20%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px">Action</th>
             </tr>
 
             @foreach (var item in Model)
@@ -28,19 +28,19 @@
                 if (item.UserID == User.Identity.Name)
                 {
                     <tr>
-                        <td>
+                        <td style = "color:aquamarine;">
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
-                        <td>
+                        <td style = "color:aquamarine;">
                             @Html.DisplayFor(modelItem => item.PostalCode)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
+                        <td style = "color:aquamarine;">
+                            $@Html.DisplayFor(modelItem => item.Price)
                         </td>
                         <td>
                             <a href="@Html.DisplayFor(modelItem => item.ItemSearchURL)" target="_blank"><img src="@Html.DisplayFor(modelItem => item.Image)" /></a>
                         </td>
-                        <td>
+                        <td style = "color:aquamarine;">
                             @Html.ActionLink("Delete", "Delete", new { id = item.FavoriteID })
                         </td>
                     </tr>
@@ -50,4 +50,4 @@
 
         </table>
     </div>
-    </body>
+</body>

@@ -5,41 +5,41 @@
 @{
     ViewBag.Title = "HotLamps";
 }
-<body background="/Content/Images/lampbaeglow.jpg" style="background-size:cover">
+<body background="/Content/Blue_Light.jpg" style="background-size:cover;background-attachment:fixed">
     <div align="center">
-        <h3>Lamps People Have Liked</h3>
+        <h3 style="color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px">Lamps People Have Liked</h3>
         <div>
 
             <table>
                 @for (int i = 0; i < ViewBag.RatedLampListCount; i++)
             {
-                    <a href="@ViewBag.RatedLampList[i].ItemSearchURL"> <img src="@ViewBag.RatedLampList[i].Image" type="image" alt="Lamp Bae" /></a>
+                    <a href="@ViewBag.RatedLampList[i].ItemSearchURL" target="_blank"> <img src="@ViewBag.RatedLampList[i].Image" type="image" alt="Lamp Bae" /></a>
                 }
             </table>
         </div>
 
 
 
-        <h3>Lamps You've Liked</h3>
+        <h3 style="color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px">Lamps You've Liked</h3>
 
         <div>
             <table>
                 @foreach (var x in ViewBag.TU)
             {
-                    <td><a href="@x.ItemSearchURL" type="image" alt="Lamp Bae"><img src="@x.Image" /></a></td>
+                    <td><a href="@x.ItemSearchURL" type="image" alt="Lamp Bae" target="_blank"><img src="@x.Image" /></a></td>
                 }
             </table>
         </div>
 
-        <h3>Lamps Your Friends Have Liked</h3>
+        <h3 style="color:white;background-color:darkslateblue;margin-left: 500px; margin-right:500px">Lamps Your Friends Have Liked</h3>
 
         <div>
             <table>
                 @foreach (var x in ViewBag.FriendsLamps)
             {
-                    <td><a href="@x.ItemSearchURL" type="image" alt="Lamp Bae"><img src="@x.Image" /></a></td>
+                    <td><a href="@x.ItemSearchURL" type="image" alt="Lamp Bae" target="_blank"><img src="@x.Image" /></a></td>
                 }
             </table>
         </div>
     </div>
-    </body>
+</body>

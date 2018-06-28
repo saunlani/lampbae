@@ -6,37 +6,34 @@
 <body background="/Content/Blue_Light.jpg" style="background-size:cover">
 
     <div align="center">
-        <h2>@ViewBag.Title</h2>
+        <h2 style="color:white">@ViewBag.Title</h2>
         <div class="row">
             <div class="col-md-8">
                 <section id="loginForm">
                     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
-                        <h4>Use a local account or an existing Google account to log in.</h4>
+                        <h4 style="color:white" align="center">Use a local account or an existing Google account to log in.</h4>
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-10">
+                        <div class="form-group" style="color:white">
+                            @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+
                                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-10">
+                        <div class="form-group" style="color:white">
+                            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+
                                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
-                        </div>
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <div class="checkbox">
+
+                                <div class="checkbox" style="color:white">
                                     @Html.CheckBoxFor(m => m.RememberMe)
                                     @Html.LabelFor(m => m.RememberMe)
                                 </div>
                             </div>
-                        </div>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="submit" value="Log in" class="btn btn-default" />

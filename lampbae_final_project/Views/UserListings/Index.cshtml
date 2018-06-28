@@ -4,12 +4,12 @@
     ViewBag.Title = "Lamps I'm Listing";
 }
 
-<h2>Lamps I'm Listing</h2>
+<h2 style="color:white; margin-left: 550px; margin-right:550px;text-align:center">Lamps I'm Listing</h2>
 
-<body background="/Content/Blue_Light.jpg" style="background-size:cover">
+<body background="/Content/Blue_Light.jpg" style="background-size:cover;background-attachment:fixed">
     <div>
-        <form action="/UserListings/Create">
-            <input type="submit" value="List A New Lamp" style="background-color:goldenrod" /><br />
+        <form action="/Home/NewLamp">
+            <input type="submit" value="List A New Lamp" style="background-color:white" /><br />
         </form>
     </div>
 
@@ -43,7 +43,7 @@
                     $@Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Image)
+                    <img src="~/Content/@item.Image" height="80" width="80" />
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |

@@ -3,102 +3,106 @@
 @{
     ViewBag.Title = "Delete";
 }
+<body background="/Content/Blue_Light.jpg" style="background-size:cover;background-attachment:fixed">
+    <div style="text-align:center">
+        <h2 style="color:white">Delete</h2>
 
-<h2>Delete</h2>
+        <h3 style="color:white;margin-left:450px;margin-right:450px">Are you sure you want to delete this?</h3>
+        <div style="text-align:center">
+            <h4 style="color:white">Listing</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt style="color:white;background-color:darkslateblue;margin-left:650px;margin-right:650px">
+                    @Html.DisplayNameFor(model => model.EbayItemNumber)
+                </dt>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Listing</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.EbayItemNumber)
-        </dt>
+                <dd style="color:white;">
+                    @Html.DisplayFor(model => model.EbayItemNumber)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.EbayItemNumber)
-        </dd>
+                <dt style="color:white;background-color:darkslateblue;margin-left:650px;margin-right:650px">
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+                <dd style="color:white;">
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+                <dt style="color:white;background-color:darkslateblue;margin-left:650px;margin-right:650px">
+                    @Html.DisplayNameFor(model => model.PostalCode)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PostalCode)
-        </dt>
+                <dd style="color:white;">
+                    @Html.DisplayFor(model => model.PostalCode)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.PostalCode)
-        </dd>
+                <dt style="color:white;background-color:darkslateblue;margin-left:650px;margin-right:650px">
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
+                <dd style="color:white;">
+                    @Html.DisplayFor(model => model.EndDate)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
+                <dt style="color:white;background-color:darkslateblue;margin-left:650px;margin-right:650px">
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+                <dd style="color:white;">
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+                <dt style="color:white;background-color:darkslateblue;margin-left:650px;margin-right:650px">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                <dd style="color:white;">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                <dt style="color:white;background-color:darkslateblue;margin-left:650px;margin-right:650px">
+                    @Html.DisplayNameFor(model => model.Image)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
+                <dd style="color:white;">
+                    @Html.DisplayFor(model => model.Image)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
+                <dt style="color:white;background-color:darkslateblue;margin-left:650px;margin-right:650px">
+                    @Html.DisplayNameFor(model => model.Rating)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
+                <dd style="color:white;">
+                    @Html.DisplayFor(model => model.Rating)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
+                <dt style="color:white;background-color:darkslateblue;margin-left:650px;margin-right:650px">
+                    @Html.DisplayNameFor(model => model.ReportCount)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ReportCount)
-        </dt>
+                <dd style="color:white;">
+                    @Html.DisplayFor(model => model.ReportCount)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ReportCount)
-        </dd>
+                <dt style="color:white;background-color:darkslateblue;margin-left:650px;margin-right:600px">
+                    @Html.DisplayNameFor(model => model.ItemSearchURL)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemSearchURL)
-        </dt>
+                <dd style="color:white;">
+                    @Html.DisplayFor(model => model.ItemSearchURL)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ItemSearchURL)
-        </dd>
+            </dl>
 
-    </dl>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" style = "color:crimson;" /> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
         </div>
-    }
-</div>
+        </div>
+</body>

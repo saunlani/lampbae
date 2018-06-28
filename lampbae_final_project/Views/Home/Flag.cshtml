@@ -2,15 +2,15 @@
 @{
     ViewBag.Title = "Report";
 }
+<body background="/Content/Blue_Light.jpg" style="background-size:cover;background-attachment:fixed">
 
+    <div align="center">
+        <h4 style="color:white">Reason for Report:</h4>
+        <form action="/Home/SubmitFlag">
+            <textarea name="info" required cols="40" rows="5"></textarea><br />
+            <input name="lampid" type="hidden" value="@ViewBag.DaLamp" />
+            <input type="submit" value="Submit" style="background-color:wheat" />
+        </form>
+    </div>
+</body>
 
-<div align="center">
-    <h4>Reason for Report:</h4>
-    <form action="/Home/SubmitFlag">
-        <textarea name="info" cols="40" rows="5"></textarea><br />
-        <input name="lampid" type="hidden" value="@ViewBag.DaLamp" />
-        <input type="submit" value="Submit" />
-    </form>
-</div>
-    
-  

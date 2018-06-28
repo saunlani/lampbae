@@ -2,12 +2,12 @@
 @{
     ViewBag.Title = "Lamp Display";
 }
-<body background="/Content/Blue_Light.jpg" style="background-size:cover">
+<body background="/Content/Blue_Light.jpg" style="background-size:cover;background-attachment:fixed">
 
     <br />
     <text align="center">
         <div>
-            <h2 style="color:white">
+            <h2 style="color:white; margin-left: 400px; margin-right:400px">
                 @ViewData["ItemTitle"]<br />
             </h2>
         </div>
@@ -24,14 +24,14 @@
 
 
                 <div>
-                    <h3> $@ViewData["Price"]<br /> </h3>
+                    <h3 style="color:white;background-color:darkslateblue; margin-left: 600px; margin-right:600px"> $@ViewData["Price"]<br /> </h3>
                 </div>
                 <br />
 
 
                 <text align="center">
-                    <div>
-                        This lamp is @ViewBag.Distance miles away from you!<br />
+                    <div >
+                       <h4 style="color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px"> This lamp is @ViewBag.Distance miles away from you!</h4><br />
                     </div>
 
 
@@ -40,7 +40,7 @@
                         <form action="/Home/Rating">
                             <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
                             <input name="ratingvalue" type="hidden" value=1 />
-                            <input type="submit" value="Like" style="background-color:lightslategrey"/>
+                            <input type="submit" value="Like" style="background-color:wheat"/>
                         </form>
                     </div>
 
@@ -49,13 +49,13 @@
                         <form action="/Home/Rating">
                             <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
                             <input name="ratingvalue" type="hidden" value=-1 />
-                            <input type="submit" value="Dislike" />
+                            <input type="submit" value="Dislike" style="background-color:wheat"/>
                         </form>
 
 
                         <input type="hidden" value="@ViewData["CurrentLampID"]" id="lampID" />
-                        <input type="button" value="Add to Favorites" onclick="addToFavs()" />
-                        <text id="FavoriteConfirmation">
+                        <input type="button" value="Add to Favorites" onclick="addToFavs()" style="background-color:wheat"/>
+                        <text style="color:white" id="FavoriteConfirmation">
                             <small>
                                 @ViewBag.FavoriteConfirmation
                             </small>
@@ -67,7 +67,7 @@
 
                         <form action="/Home/Flag">
                             <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
-                            <input type="submit" value="Report" />
+                            <input type="submit" value="Report" style="background-color:wheat" />
                         </form>
                     </div>
                 </text>

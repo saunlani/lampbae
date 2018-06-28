@@ -3,24 +3,26 @@
 @{
     ViewBag.Title = "Friends";
 }
-<body background="/Content/Blue_Light.jpg" style="background-size:cover">
+<body background="/Content/Blue_Light.jpg" style="background-size:cover;background-attachment:fixed">
 
     <div style="margin: 0 auto; width: 656px; text-align: center;">
-        <h2>My Friends</h2>
+        <h2 style="color:white;">My Friends</h2>
         <br />
         <button> @Html.ActionLink("Add New Friend", "Create")</button>
+        @TempData["Conf"]
+
 
         <table class="table">
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
+                    <td style = "color:aquamarine;">
                         @if (item.UserID1 == User.Identity.Name)
                         {
                         }
                         else
                         {
-                        
+
                             @item.UserID1 
                         }
                         @if (item.UserID2 == User.Identity.Name)
@@ -31,15 +33,15 @@
                             @item.UserID2
                         }
                     </td>
-                    <td>
-                        <t>@Html.ActionLink("Remove Friend", "Delete", new { id = item.ConnectionID })</t>
+                    <td >
+                        <t>@Html.ActionLink("Remove Friend ||", "Delete", new { id = item.ConnectionID }, new { @style = "color:white;"})</t>
                         @if (item.UserID1 == User.Identity.Name)
                         {
-                            @Html.ActionLink("View Liked Lamps", "FriendLampList", new { friendID = item.UserID2 })
+                            @Html.ActionLink("View Liked Lamps", "FriendLampList", new { friendID = item.UserID2 }, new { @style = "color:fuchsia;" })
                         }
                         else
                         {
-                            @Html.ActionLink("View Liked Lamps", "FriendLampList", new { friendID = item.UserID1 })
+                            @Html.ActionLink("View Liked Lamps", "FriendLampList", new { friendID = item.UserID1 }, new { @style = "color:fuchsia;" })
                         }
                     </td>
                 </tr>

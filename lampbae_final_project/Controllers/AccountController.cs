@@ -9,6 +9,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using lampbae_final_project.Models;
+using Newtonsoft.Json.Linq;
+using System.Net;
+using System.IO;
+using System.Collections.Generic;
 
 namespace lampbae_final_project.Controllers
 {
@@ -57,6 +61,75 @@ namespace lampbae_final_project.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            string userIP = UtilityClass.GetIP();
+            string postalcode = UtilityClass.GetZip(userIP);
+            JArray items;
+            string keyword = "lamp";
+            int page;
+
+            for (page = 1; page < 5; page++)
+            {
+                HttpWebRequest WR = WebRequest.CreateHttp($"http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords" +
+                    $"&SERVICE-VERSION=1.0.0&GLOBAL-ID=EBAY-US&SECURITY-APPNAME=shaunitt-studenta-PRD-b7141958a-1d5c6f0c&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD=TRUE" +
+                    $"&keywords={keyword}&buyerPostalCode={postalcode}&itemFilter.name=MaxDistance&itemFilter.value=40" +
+                    $"&paginationInput.entriesPerPage=100&paginationInput.pageNumber={page}");
+
+                HttpWebResponse Response;
+                try
+                {
+                    Response = (HttpWebResponse)WR.GetResponse();
+                }
+                catch (WebException e)
+                {
+                    ViewBag.Error = "Exception";
+                    ViewBag.ErrorDescription = e.Message;
+                    return View();
+                }
+
+                //reads response
+                StreamReader reader = new StreamReader(Response.GetResponseStream());
+                string searchData = reader.ReadToEnd();
+                //parses JSON
+                JObject JsonData = JObject.Parse(searchData);
+
+                //J array for items returned
+                items = (JArray)JsonData["findItemsByKeywordsResponse"][0]["searchResult"][0]["item"];
+
+
+                //instantiate new ebaylisting object
+                Listing listing = new Listing();
+
+                //instantiate new lamp entities database
+                LampBaeEntities1 db = new LampBaeEntities1();
+
+                List<Listing> LampDBList = new List<Listing>();
+
+                LampDBList = (from p in db.Listings
+                              where p.ID != 0
+                              select p).ToList();
+
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (LampDBList.Exists(x => x.EbayItemNumber != null && x.EbayItemNumber.ToString() == (string)items[i]["itemId"][0]))
+                    {
+                        //dupes detected
+                    }
+                    else
+                    {
+                        listing.ItemSearchURL = (string)items[i]["viewItemURL"][0];
+                        listing.Title = (string)items[i]["title"][0];
+                        listing.Image = (string)items[i]["galleryURL"][0];
+                        listing.PostalCode = (string)items[i]["postalCode"][0];
+                        listing.EbayItemNumber = (string)items[i]["itemId"][0];
+                        listing.EndDate = (DateTime)items[i]["listingInfo"][0]["endTime"][0];
+                        listing.Price = (decimal)items[i]["sellingStatus"][0]["currentPrice"][0]["__value__"];
+                        new Listing() { EbayItemNumber = listing.EbayItemNumber, ItemSearchURL = listing.ItemSearchURL, Title = listing.Title, PostalCode = listing.PostalCode, Image = listing.Image };
+                        db.Listings.Add(listing);
+                        db.SaveChanges();
+                    }
+                }
+            }
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }

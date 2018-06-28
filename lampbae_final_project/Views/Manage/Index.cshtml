@@ -2,35 +2,35 @@
 @{
     ViewBag.Title = "Manage";
 }
-<body background="/Content/Blue_Light.jpg" style="background-size:cover">
+<body background="/Content/Blue_Light.jpg" style="background-size:cover;background-attachment:fixed">
     <div>
         <text align="center">
-            <h2>@ViewBag.Title</h2>
+            <h2 style="color:white;">@ViewBag.Title</h2>
             <div>
                 <form action="/Home/NewLamp">
-                    <input type="submit" value="New Lamp" style="background-color:goldenrod" /><br />
+                    <input type="submit" value="New Lamp" style="background-color:white" /><br />
                 </form>
             </div>
             <br />
             <div>
                 <form action="/UserListings/Index">
-                    <input type="submit" value="My Lamps" style="background-color:goldenrod" /><br />
+                    <input type="submit" value="My Lamps" style="background-color:white" /><br />
                 </form>
             </div>
             <br />
             <div>
                 <form action="/Friends/Index">
-                    <input type="submit" value="My Friends" style="background-color:goldenrod" /><br />
+                    <input type="submit" value="My Friends" style="background-color:white" /><br />
                 </form>
             </div>
             <br />
             <p class="text-success">@ViewBag.StatusMessage</p>
     </div>
     <div>
-        <h4>Change your account settings</h4>
+        <h4 style="color:white;">Change your account settings</h4>
         <hr />
         <dl class="dl-horizontal">
-            <dt style="text-align:center">Password:</dt>
+            <dt style="text-align:center; color:white;">Password:</dt>
             <dd>
                 [
                 @if (Model.HasPassword)
@@ -44,7 +44,7 @@
                 ]
             </dd>
 
-            <dt style="text-align:center">External Logins:</dt>
+            <dt style="text-align:center; color:white;">External Logins:</dt>
             <dd>
                 @Model.Logins.Count [
                 @Html.ActionLink("Manage", "ManageLogins") ]

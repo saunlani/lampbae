@@ -3,76 +3,80 @@
 @{
     ViewBag.Title = "Admin Dashboard";
 }
+<body background="/Content/Blue_Light.jpg" style="background-size:cover;background-attachment:fixed">
+    <div align="center">
+        <h2 style="color:white; margin-left: 550px; margin-right:550px">Admin</h2>
 
-<h2>Admin</h2>
+        <p style = "color:aquamarine;">
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <p style = "color:aquamarine;">
+            @Html.ActionLink("Manually Populate Database", "Search", "Home")
+        </p>
+        <table class="table">
+            <tr>
+                <th style = "width:10%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px;">
+                    @Html.DisplayNameFor(model => model.EbayItemNumber)
+                </th>
+                <th style = "width:20%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px;">
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th style = "width:10%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px;">
+                    @Html.DisplayNameFor(model => model.PostalCode)
+                </th>
+                <th style = "width:10%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px;">
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th style = "width:10%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px;">
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th style = "width:10%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px;">
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th style = "width:10%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px;">
+                    @Html.DisplayNameFor(model => model.Rating)
+                </th>
+                <th style = "width:10%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px;">
+                    @Html.DisplayNameFor(model => model.ReportCount)
+                </th>
+                <th style = "width:10%;color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px;">Actions</th>
+            </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<p>
-    @Html.ActionLink("Manually Populate Database", "Search", "Home")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.EbayItemNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PostalCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rating)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReportCount)
-        </th>
-        <th></th>
-    </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style = "color:aquamarine;">
+                        @Html.DisplayFor(modelItem => item.EbayItemNumber)
+                    </td>
+                    <td style = "color:aquamarine;">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td style = "color:aquamarine;">
+                        @Html.DisplayFor(modelItem => item.PostalCode)
+                    </td>
+                    <td style = "color:aquamarine;">
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td style = "color:aquamarine;">
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td style = "color:aquamarine;">
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td style = "color:aquamarine;">
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td style = "color:aquamarine;">
+                        @Html.DisplayFor(modelItem => item.ReportCount)
+                    </td>
+                    <td style = "color:aquamarine;">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.EbayItemNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostalCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rating)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReportCount)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
 
-</table>
+        </table>
+        </div>
+</body>

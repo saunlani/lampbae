@@ -3,10 +3,10 @@
     ViewBag.Title = "LinkImage";
 }
 
-<body background="/Content/Images/lampbaeback.png" style="background-size:cover;">
+<body background="/Content/Blue_Light.jpg" style="background-size:cover;background-attachment:fixed">
     <text align="center">
         <div>
-            <h2>
+            <h2 style="color:white; margin-left: 500px; margin-right:500px">
                 @ViewData["Name"]<br />
             </h2>
         </div>
@@ -17,17 +17,18 @@
         </div>
         <text align="center">
             <div>
-                <h3> @ViewData["Price"]<br /> </h3>
+                <h3 style="color:white;background-color:darkslateblue; margin-left: 600px; margin-right:600px"> @ViewData["Price"]<br /> </h3>
             </div>
             <br />
             <text align="center">
                 <div>
-                    Contact Info: <h4> @ViewData["ContactInfo"] </h4>
+                   <h4 style="color:white;background-color:darkslateblue; margin-left: 600px; margin-right:600px"> Contact Info: </h4> 
+                    <h4 style="color:white"> @ViewData["ContactInfo"] </h4>
                 </div>
                 <div>
 
                     <input type="hidden" value="@ViewData["CurrentLampID"]" id="lampID" />
-                    <input type="button" value="Add to Favorites" onclick="addToFavs()" />
+                    <input type="button" value="Add to Favorites" onclick="addToFavs()" style="background-color:wheat"/>
                     <text id="FavoriteConfirmation" style="font-family:'Times New Roman', Times, serif, Times, serif; fon">
 
                         <small>

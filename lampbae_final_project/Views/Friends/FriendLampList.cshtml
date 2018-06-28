@@ -1,18 +1,19 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "FriendLampList";
 }
-<div align="center">
-    <h2>This Friend Liked These Lamps</h2>
+<body background="/Content/Blue_Light.jpg" style="background-size:cover;background-attachment:fixed">
+    <div align="center">
+        <h2 style="color:white">This Friend Liked These Lamps</h2>
 
-    @*@ViewBag.FriendLampList
-        @ViewBag.FriendLampListCount*@
-    <div>
-        <table>
-            @foreach (var x in ViewBag.FriendLampListings)
+        @*@ViewBag.FriendLampList
+            @ViewBag.FriendLampListCount*@
+        <div>
+            <table>
+                @foreach (var x in ViewBag.FriendLampListings)
             {
-                <td><a href="@x.ItemSearchURL" type="image" alt="Lamp Bae"><img src="@x.Image" /></a></td>
-            }
-        </table>
+                    <td><a href="@x.ItemSearchURL" type="image" alt="Lamp Bae" target="_blank"> <img src="@x.Image" /> </a></td>
+                }
+            </table>
+        </div>
     </div>
-</div>
+    </body>
