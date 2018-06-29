@@ -5,63 +5,63 @@
 }
 <body background="/Content/Blue_Light.jpg" style="background-size:cover;background-attachment:fixed">
     <div align="center">
-        <h2 style="color:white; margin-left: 600px; margin-right:600px">NewLamp</h2>
+        <h2 style="color:white;">NewLamp</h2>
 
         @using (Html.BeginForm("NewLamp", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <h4 style="color:white; margin-left: 600px; margin-right:600px">Listing</h4>
+                <h4 style="color:white;">Listing</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @style = "color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px"})
+                <div class="form-group" style="color:white;">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
                     <div>
 
                         @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @style = "color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px" })
+                <div class="form-group" style="color:white;">
+                    @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label" })
                     <div>
                         @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                         @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @style = "color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px" })
+                <div class="form-group" style="color:white;">
+                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label" })
                     <div>
                         @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <input type="hidden" name="Email" value="@User.Identity.Name" />
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @style = "color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px", required = "required" })
+                <div class="form-group" style="color:white;">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
                     <div>
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @style = "color:white;background-color:darkslateblue; margin-left: 500px; margin-right:500px", required = "required" })
+                <div class="form-group" style="color:white;">
+                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label", required = "required" })
                     <div>
-                        <input type="file" name="file" value="Browse" required/>
+                        <input type="file" name="file" value="Browse" required />
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div>
-                        <input type="submit" value="Create" style="background-color:wheat" />
+                        <input type="submit" value="Create" class="btn btn-default" />
                     </div>
                 </div>
             </div>
         }
         <br />
-        <div style="background-color:darkslateblue;margin-left: 600px; margin-right:600px">
+        <div>
             @Html.ActionLink("Back to List", "Index")
         </div>
     </div>

@@ -37,19 +37,19 @@
 
 
                     <div>
-                        <form action="/Home/Rating">
+                        <form action="/Home/Rating" style="height:80px;width:80px; position: absolute; right: 250px; top: 250px;">
                             <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
                             <input name="ratingvalue" type="hidden" value=1 />
-                            <input type="submit" value="Like" style="background-color:wheat"/>
+                            <input type="submit" value="Like" style="border-color:darkblue"/>
                         </form>
                     </div>
 
                     <div>
 
-                        <form action="/Home/Rating">
+                        <form action="/Home/Rating" style="height:80px;width:80px; position: absolute; left: 250px; top: 250px;">
                             <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
                             <input name="ratingvalue" type="hidden" value=-1 />
-                            <input type="submit" value="Dislike" style="background-color:wheat"/>
+                            <input type="submit" value="Dislike" style="border-color:red"/>
                         </form>
 
 
@@ -60,11 +60,11 @@
                                 @ViewBag.FavoriteConfirmation
                             </small>
                         </text>
-
+                       
 
 
                         @*@TempData["shortMessage"]*@
-
+                        <br />
                         <form action="/Home/Flag">
                             <input name="lampid" type="hidden" value="@ViewData["CurrentLampID"]" />
                             <input type="submit" value="Report" style="background-color:wheat" />

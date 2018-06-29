@@ -15,34 +15,34 @@
 
     <table class="table">
         <tr>
-            <th>
+            <th style = "width:20%;color:white;background-color:darkslateblue">
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
+            <th style = "width:20%;color:white;background-color:darkslateblue">
                 @Html.DisplayNameFor(model => model.PostalCode)
             </th>
-            <th>
+            <th style = "width:20%;color:white;background-color:darkslateblue">
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th>
+            <th style = "width:20%;color:white;background-color:darkslateblue">
                 @Html.DisplayNameFor(model => model.Image)
             </th>
-            <th></th>
+            <th style = "width:20%;color:white;background-color:darkslateblue">Actions</th>
         </tr>
 
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td style = "color:aquamarine;">
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
-                <td>
+                <td style = "color:aquamarine;">
                     @Html.DisplayFor(modelItem => item.PostalCode)
                 </td>
-                <td>
+                <td style = "color:aquamarine;">
                     $@Html.DisplayFor(modelItem => item.Price)
                 </td>
-                <td>
+                <td style = "color:aquamarine;">
                     <img src="~/Content/@item.Image" height="80" width="80" />
                 </td>
                 <td>

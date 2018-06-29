@@ -8,9 +8,9 @@
     <div style="margin: 0 auto; width: 656px; text-align: center;">
         <h2 style="color:white;">My Friends</h2>
         <br />
+
         <button> @Html.ActionLink("Add New Friend", "Create")</button>
         @TempData["Conf"]
-
 
         <table class="table">
             @foreach (var item in Model)
@@ -23,7 +23,9 @@
                         else
                         {
 
-                            @item.UserID1 
+
+                            @item.UserID1
+
                         }
                         @if (item.UserID2 == User.Identity.Name)
                         {
